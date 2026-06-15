@@ -5,16 +5,16 @@
 // =============================================================================
 
 export const profile = {
-  name: "Your Name",
+  name: "Santiago Giraldo Godoy",
   role: "Secure Full-Stack & Web Developer",
   tagline:
     "I build fast, secure web applications end-to-end — from React frontends to hardened Node APIs on AWS.",
-  location: "City, Country",
-  email: "you@example.com",
+  location: "Worcester, USA",
+  email: "sgiraldog@gmail.com",
   available: true, // shows an "available for work" badge
   socials: {
-    github: "https://github.com/yourhandle",
-    linkedin: "https://linkedin.com/in/yourhandle",
+    github: "https://github.com/sgiraldog18",
+    linkedin: "https://www.linkedin.com/in/santiagogiraldog",
     twitter: "",
   },
   // Path to your resume in client/public — drop your PDF there.

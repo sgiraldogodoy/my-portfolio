@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Send } from "lucide-react";
+import { Mail, Phone, Send } from "lucide-react";
 import Section from "./Section";
 import { profile } from "../data/content";
 import { sendContact } from "../lib/api";
@@ -33,12 +33,22 @@ export default function Contact() {
             Have a project in mind, or just want to say hi? Drop me a message and
             I'll get back to you.
           </p>
-          <a
-            href={`mailto:${profile.email}`}
-            className="mt-6 inline-flex items-center gap-2 text-[var(--color-accent-2)] hover:underline"
-          >
-            <Mail size={18} /> {profile.email}
-          </a>
+          <div className="mt-6 space-y-3">
+            <a
+              href={`mailto:${profile.email}`}
+              className="flex items-center gap-2 text-[var(--color-accent-2)] hover:underline"
+            >
+              <Mail size={18} /> {profile.email}
+            </a>
+            {profile.phone && (
+              <a
+                href={`tel:${profile.phone.replace(/[^+\d]/g, "")}`}
+                className="flex items-center gap-2 text-[var(--color-accent-2)] hover:underline"
+              >
+                <Phone size={18} /> {profile.phone}
+              </a>
+            )}
+          </div>
         </div>
 
         <form onSubmit={onSubmit} className="space-y-4">

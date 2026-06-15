@@ -1,0 +1,7 @@
+Drop your resume here as `resume.pdf` (this folder: client/public/).
+
+Anything in client/public/ is served at the site root, so the file will be
+available at /resume.pdf — which is exactly what the "Resume" / "Download"
+buttons point to (see profile.resumeUrl in src/data/content.ts).
+
+You can delete this README once your real resume.pdf is in place.

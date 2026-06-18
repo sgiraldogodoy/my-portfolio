@@ -70,8 +70,11 @@ export const skills: { category: string; items: Skill[] }[] = [
 
 export type Project = {
   title: string;
-  description: string;
+  description: string; // short line shown on the card
+  details?: string; // longer paragraph shown in the detail modal
+  highlights?: string[]; // bullet points shown in the detail modal
   tech: string[];
+  image?: string; // optional screenshot: put the file in client/public and use "/shot.png"
   liveUrl?: string;
   repoUrl?: string;
   featured?: boolean;
@@ -81,29 +84,111 @@ export const projects: Project[] = [
   {
     title: "School Benchmarking Web App",
     description:
-      "A cloud-hosted MERN application built with Osprey Software: secure logins, enforced data access and privacy, and a dashboard for comparing private schools' annual data against peers in their group or region.",
+      "Cloud-hosted MERN app with secure logins and a comparative analytics dashboard, built with Osprey Software.",
+    details:
+      "A 5-person team prototype for Osprey Software: a private-school benchmarking platform running in the cloud. Private schools submit annual data through an improved UI and compare themselves against peers in their group or region — with enforced data access and privacy throughout.",
+    highlights: [
+      "Built the full app on the MERN stack (MongoDB, Express, React, Node) with TypeScript and Tailwind.",
+      "Implemented secure logins and enforced data access/privacy controls.",
+      "Designed a dashboard for comparative analyses across schools by group and region.",
+    ],
     tech: ["React", "Node", "Express", "MongoDB", "TypeScript", "Tailwind"],
     featured: true,
   },
   {
     title: "AI for Impact: Inferring Suicidal Ideation",
     description:
-      "Award-winning MQP (WPI's 2026 Data Science Outstanding MQP Award). Re-architected a Kotlin Multiplatform mental-health app to ~80% shared iOS/Android code and built passive multi-modal smartphone data collection for an active medical research trial.",
+      "Award-winning MQP: a Kotlin Multiplatform mental-health app with passive multi-modal smartphone sensing.",
+    details:
+      "My Major Qualifying Project (capstone), recipient of WPI's 2026 Data Science Outstanding MQP Award. The work supported an active medical research trial studying how digital behavior correlates with self-reported suicidal ideation.",
+    highlights: [
+      "Re-architected a Kotlin Multiplatform app to ~80% shared Android/iOS code for maintainability and cross-platform parity.",
+      "Built passive data collection (motion, app usage, Bluetooth, surveys) for multi-modal behavioral analysis.",
+      "Ran exploratory data analysis and feature engineering to correlate digital behavior with self-reported ideation.",
+    ],
     tech: ["Kotlin Multiplatform", "Data Science", "Mobile"],
     featured: true,
   },
   {
     title: "Hospital App Prototype (Brigham & Women's)",
     description:
-      "Backend technical lead on a 10-person Agile team. Built hospital pathfinding, a map editor, and an EMR with React, TypeScript, Shadcn UI, Express, Prisma, and PostgreSQL — authoring ~90% of the schema and the tRPC routes.",
+      "Backend technical lead on a 10-person Agile team building hospital pathfinding, a map editor, and an EMR.",
+    details:
+      "A software-engineering studio project for Brigham & Women's Hospital. I led the backend subgroup, owning the data model and the API layer connecting frontend and backend.",
+    highlights: [
+      "Authored ~90% of the database schema (ERD + Prisma) and the tRPC routes.",
+      "Built hospital pathfinding, a map editor, and a functional EMR input.",
+      "Applied Agile methodologies and software design patterns across the team.",
+    ],
     tech: ["React", "TypeScript", "tRPC", "Prisma", "PostgreSQL"],
+  },
+  {
+    title: "Spreadsheet Application",
+    description:
+      "A full-stack spreadsheet engine (Spring Boot + React) with a custom formula parser and dependency tracking.",
+    details:
+      "A from-scratch spreadsheet built around clean architecture and classic design patterns, with a focus on correctness and extensibility.",
+    highlights: [
+      "Followed MVC to separate frontend, backend, and business logic.",
+      "Custom expression parser using the Shunting Yard algorithm for arithmetic and aggregates (SUM, COUNT, AVE).",
+      "Evaluation engine using Composite, Factory, and Observer patterns with cell/range references, dependency tracking, and circular-reference detection.",
+      "Comprehensive JUnit tests covering parsing and edge cases.",
+    ],
+    tech: ["Java", "Spring Boot", "React", "Design Patterns"],
   },
   {
     title: "Traffic Sign Recognition (CNN)",
     description:
-      "A custom convolutional neural network for traffic-sign classification reaching 99.50% accuracy, plus fine-tuned ResNet50 / VGG16 models improved from 70% to 95%+ through data augmentation and hyperparameter tuning.",
+      "A custom CNN reaching 99.50% accuracy for traffic-sign classification, plus fine-tuned transfer models.",
+    details:
+      "A machine-learning project comparing a custom convolutional network against fine-tuned pretrained backbones for traffic-sign classification.",
+    highlights: [
+      "Custom CNN achieving 99.50% classification accuracy.",
+      "Fine-tuned ResNet50 and VGG16 from 70% to 95%+ accuracy.",
+      "Data preprocessing and augmentation to improve generalization.",
+    ],
     tech: ["Python", "PyTorch", "Deep Learning"],
   },
+  {
+    title: "Robotic Manipulation System",
+    description:
+      "A vision-guided 4-DOF robotic arm in MATLAB performing autonomous pick-and-place sorting.",
+    details:
+      "Designed and programmed a 4-degree-of-freedom manipulator that detects, localizes, and sorts objects autonomously.",
+    highlights: [
+      "Forward and inverse kinematics for precise end-effector positioning in task space.",
+      "Trajectory generation and velocity kinematics for smooth, continuous motion.",
+      "Integrated computer vision (intrinsic & extrinsic calibration) to map image space to robot coordinates.",
+    ],
+    tech: ["MATLAB", "Robotics", "Computer Vision"],
+  },
+];
+
+export type Paper = {
+  title: string;
+  venue: string; // where it was written/published, e.g. "WPI Major Qualifying Project"
+  date: string;
+  description: string;
+  authors?: string; // e.g. "S. Giraldo Godoy, et al."
+  award?: string; // optional award/recognition line
+  tags?: string[];
+  pdfUrl?: string; // a PDF in client/public (e.g. "/papers/mqp.pdf") or an external link
+  link?: string; // external link: DOI, repository, project page, etc.
+};
+
+export const papers: Paper[] = [
+  {
+    title: "AI for Impact: Inferring Suicidal Ideation via Smartphones",
+    venue: "WPI Major Qualifying Project (Capstone)",
+    date: "Aug 2025 — May 2026",
+    description:
+      "Investigates whether passively collected smartphone signals (motion, app usage, Bluetooth, and survey data) can help infer self-reported suicidal ideation, using a cross-platform data-collection app built for an active medical research trial.",
+    award: "WPI 2026 Data Science Outstanding MQP Award",
+    tags: ["Machine Learning", "Digital Health", "Mobile Sensing"],
+    // pdfUrl: "/papers/mqp.pdf",   // drop the PDF in client/public/papers/
+    // link: "",                    // or link to an external/published version
+  },
+  // Add more papers here following the same shape.
 ];
 
 export type Experience = {

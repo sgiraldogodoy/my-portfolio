@@ -188,6 +188,17 @@ export const papers: Paper[] = [
     // pdfUrl: "/papers/mqp.pdf",   // drop the PDF in client/public/papers/
     // link: "",                    // or link to an external/published version
   },
+  {
+    title: "Digital Tools for Making and Monitoring of Hawaiian Seed Gardens",
+    venue: "Punawai, Vol. 1 — WPI Hawaiʻi Project Center",
+    date: "May 2025",
+    authors: "K. Brown, J. De La Cruz, S. Giraldo, P. Gupta, S. Wiernik",
+    description:
+      "In collaboration with Protect and Preserve Hawaiʻi, we built digital tools to promote rain-garden adoption for stormwater management and ecosystem restoration in the Ala Wai Watershed: an Augmented Reality visualization tool, an ArcGIS StoryMap for outreach, and SeedSync, a platform for garden monitoring — designed from homeowner surveys and volunteer consultations.",
+    tags: ["Augmented Reality", "GIS", "Web Tools", "Sustainability"],
+    pdfUrl: "https://wp.wpi.edu/hawaii/files/2025/05/Punawai-Vol-1.pdf#page=55",
+    link: "https://wp.wpi.edu/hawaii/digital-tools-for-making-and-monitoring-of-hawaiian-seed-gardens/",
+  },
   // Add more papers here following the same shape.
 ];
 

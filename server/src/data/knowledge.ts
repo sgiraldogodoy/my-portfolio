@@ -40,4 +40,8 @@ export const knowledge: string[] = [
   "Project — Traffic Sign Recognition Models (WPI, 2024): a custom CNN reaching 99.50% accuracy; fine-tuned ResNet50 and VGG16 from 70% to 95%+ via data preprocessing, augmentation, and hyperparameter tuning.",
   "Project — Robotic Manipulation System (WPI, 2025): programmed a 4-DOF robotic manipulator in MATLAB with forward/inverse kinematics, trajectory generation, and computer vision for a vision-guided pick-and-place sorting system.",
   "Project — Computer Networks (WPI, 2023): implemented a TCP-based HTTP/1.1 client and server in C/C++ with Unix sockets, a reliable data-transfer protocol (Alternating Bit Protocol), and a distributed distance-vector routing algorithm.",
+
+  // --- Publications / papers ---
+  "Publication — 'AI for Impact: Inferring Suicidal Ideation via Smartphones' (WPI Major Qualifying Project / capstone, 2025–2026): Santiago's award-winning capstone thesis (WPI 2026 Data Science Outstanding MQP Award).",
+  "Publication — 'Digital Tools for Making and Monitoring of Hawaiian Seed Gardens', published in Punawai, Vol. 1 (WPI Hawaiʻi Project Center, May 2025). Co-authored by Kyra Brown, Jeremy De La Cruz, Santiago Giraldo, Pranav Gupta, and Skyler Wiernik. In collaboration with Protect and Preserve Hawaiʻi (PPH), the team built an Augmented Reality visualization tool, an ArcGIS StoryMap, and SeedSync (a garden-monitoring platform) to promote rain-garden adoption for stormwater management in the Ala Wai Watershed. Read at https://wp.wpi.edu/hawaii/files/2025/05/Punawai-Vol-1.pdf#page=55",
 ];

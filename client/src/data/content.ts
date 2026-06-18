@@ -93,20 +93,38 @@ export const projects: Project[] = [
       "Designed a dashboard for comparative analyses across schools by group and region.",
     ],
     tech: ["React", "Node", "Express", "MongoDB", "TypeScript", "Tailwind"],
+    liveUrl: "https://webware-c26-team-i-term-project.onrender.com/login",
+    repoUrl: "https://github.com/sgiraldogodoy/Webware_C26_Term_Project",
     featured: true,
+  },
+  {
+    title: "Vintage Movie Vault",
+    description:
+      "A secure MERN app where each user keeps a private, persistent movie collection behind JWT authentication.",
+    details:
+      "A full-stack web app for logging, editing, and deleting movies you've watched. Every user gets their own private collection stored in MongoDB, protected end-to-end by token-based auth — a compact demonstration of secure full-stack patterns.",
+    highlights: [
+      "JWT authentication with bcrypt-hashed credentials; tokens verified by Express middleware on every protected route.",
+      "Ownership-enforced CRUD — users can only read or modify their own movies, so ownership can't be spoofed from the frontend.",
+      "Component-based React (Vite) frontend with hooks; Express API serving the built client as a single Render web service.",
+    ],
+    tech: ["React", "Express", "MongoDB", "JWT", "Bootstrap"],
+    liveUrl: "https://a4-sgiraldogodoy.onrender.com",
+    repoUrl: "https://github.com/sgiraldogodoy/MovieVault",
   },
   {
     title: "AI for Impact: Inferring Suicidal Ideation",
     description:
       "Award-winning MQP: a Kotlin Multiplatform mental-health app with passive multi-modal smartphone sensing.",
     details:
-      "My Major Qualifying Project (capstone), recipient of WPI's 2026 Data Science Outstanding MQP Award. The work supported an active medical research trial studying how digital behavior correlates with self-reported suicidal ideation.",
+      "My Major Qualifying Project (capstone), recipient of WPI's 2026 Data Science Outstanding MQP Award. Part of the NIH-supported LEMURS app — a cross-platform tool that passively collects smartphone data to flag suicide risk from behavioral patterns and support early intervention for students.",
     highlights: [
       "Re-architected a Kotlin Multiplatform app to ~80% shared Android/iOS code for maintainability and cross-platform parity.",
       "Built passive data collection (motion, app usage, Bluetooth, surveys) for multi-modal behavioral analysis.",
+      "Machine-learning models reached 85.7% recall predicting suicide risk from screentime data.",
       "Ran exploratory data analysis and feature engineering to correlate digital behavior with self-reported ideation.",
     ],
-    tech: ["Kotlin Multiplatform", "Data Science", "Mobile"],
+    tech: ["Kotlin Multiplatform", "Machine Learning", "Mobile"],
     featured: true,
   },
   {
@@ -162,6 +180,21 @@ export const projects: Project[] = [
     ],
     tech: ["MATLAB", "Robotics", "Computer Vision"],
   },
+  {
+    title: "Personal Website (from scratch)",
+    description:
+      "A hand-built personal site with semantic HTML, a custom palette, and a photography gallery — deployed on Render.",
+    details:
+      "An earlier personal website built without a framework, focused on web fundamentals and a clean deployment workflow.",
+    highlights: [
+      "Semantic HTML and a Flexbox navigation bar for accessible, well-structured markup.",
+      "Custom color palette via CSS variables and a serif/sans-serif type pairing.",
+      "Photography page with a form and a responsive CSS Grid image gallery; served by a Node/Express app on Render.",
+    ],
+    tech: ["HTML", "CSS", "JavaScript", "Node.js"],
+    liveUrl: "https://santiago-giraldo-godoy.onrender.com",
+    repoUrl: "https://github.com/sgiraldogodoy/Personal-Page",
+  },
 ];
 
 export type Paper = {
@@ -179,19 +212,20 @@ export type Paper = {
 export const papers: Paper[] = [
   {
     title: "AI for Impact: Inferring Suicidal Ideation via Smartphones",
-    venue: "WPI Major Qualifying Project (Capstone)",
+    venue: "WPI Major Qualifying Project (Capstone) · advised by Prof. Elke Rundensteiner",
     date: "Aug 2025 — May 2026",
+    authors:
+      "S. Giraldo Godoy, J. Buwembo, E. Mastrangelo, J. Murphy, M. El Chalfoun, E. Li",
     description:
-      "Investigates whether passively collected smartphone signals (motion, app usage, Bluetooth, and survey data) can help infer self-reported suicidal ideation, using a cross-platform data-collection app built for an active medical research trial.",
+      "The NIH-supported LEMURS app passively collects smartphone signals (motion, app usage, Bluetooth, surveys) to infer suicide risk from behavioral patterns. Machine-learning models reached 85.7% recall predicting risk from screentime data, with the goal of enabling early intervention for students on both Android and iOS.",
     award: "WPI 2026 Data Science Outstanding MQP Award",
     tags: ["Machine Learning", "Digital Health", "Mobile Sensing"],
-    // pdfUrl: "/papers/mqp.pdf",   // drop the PDF in client/public/papers/
-    // link: "",                    // or link to an external/published version
+    link: "https://digital.wpi.edu/concern/student_works/hx11xk99f",
   },
   {
     title: "Digital Tools for Making and Monitoring of Hawaiian Seed Gardens",
     venue: "Punawai, Vol. 1 — WPI Hawaiʻi Project Center",
-    date: "May 2025",
+    date: "Aug 2025 — Mar 2025",
     authors: "K. Brown, J. De La Cruz, S. Giraldo, P. Gupta, S. Wiernik",
     description:
       "In collaboration with Protect and Preserve Hawaiʻi, we built digital tools to promote rain-garden adoption for stormwater management and ecosystem restoration in the Ala Wai Watershed: an Augmented Reality visualization tool, an ArcGIS StoryMap for outreach, and SeedSync, a platform for garden monitoring — designed from homeowner surveys and volunteer consultations.",

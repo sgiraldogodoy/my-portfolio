@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ExternalLink, Github, Star, X } from "lucide-react";
+import { ExternalLink, Github, PlayCircle, Star, X } from "lucide-react";
 import Section from "./Section";
 import { projects, type Project } from "../data/content";
 
@@ -132,8 +132,8 @@ function ProjectModal({
               ))}
             </div>
 
-            {(project.liveUrl || project.repoUrl) && (
-              <div className="mt-6 flex gap-4 text-sm">
+            {(project.liveUrl || project.repoUrl || project.videoUrl) && (
+              <div className="mt-6 flex flex-wrap gap-4 text-sm">
                 {project.liveUrl && (
                   <a
                     href={project.liveUrl}
@@ -142,6 +142,16 @@ function ProjectModal({
                     className="flex items-center gap-1 text-[var(--color-accent-2)] hover:underline"
                   >
                     <ExternalLink size={16} /> Live
+                  </a>
+                )}
+                {project.videoUrl && (
+                  <a
+                    href={project.videoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-1 text-[var(--color-accent-2)] hover:underline"
+                  >
+                    <PlayCircle size={16} /> Watch demo
                   </a>
                 )}
                 {project.repoUrl && (

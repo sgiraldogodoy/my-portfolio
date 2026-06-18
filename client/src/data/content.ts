@@ -77,6 +77,7 @@ export type Project = {
   image?: string; // optional screenshot: put the file in client/public and use "/shot.png"
   liveUrl?: string;
   repoUrl?: string;
+  videoUrl?: string; // optional demo video (shows a "Watch demo" link)
   featured?: boolean;
 };
 
@@ -125,6 +126,8 @@ export const projects: Project[] = [
       "Ran exploratory data analysis and feature engineering to correlate digital behavior with self-reported ideation.",
     ],
     tech: ["Kotlin Multiplatform", "Machine Learning", "Mobile"],
+    liveUrl: "https://apps.apple.com/us/app/wpi-lemurs/id6759763937",
+    repoUrl: "https://github.com/sgiraldogodoy/lemurs-kmp-app",
     featured: true,
   },
   {
@@ -139,6 +142,7 @@ export const projects: Project[] = [
       "Applied Agile methodologies and software design patterns across the team.",
     ],
     tech: ["React", "TypeScript", "tRPC", "Prisma", "PostgreSQL"],
+    repoUrl: "https://github.com/sgiraldogodoy/Soft-Eng-App",
   },
   {
     title: "Spreadsheet Application",
@@ -179,6 +183,23 @@ export const projects: Project[] = [
       "Integrated computer vision (intrinsic & extrinsic calibration) to map image space to robot coordinates.",
     ],
     tech: ["MATLAB", "Robotics", "Computer Vision"],
+    repoUrl: "https://github.com/sgiraldogodoy/RBE3001_A25_02",
+    videoUrl: "https://drive.google.com/file/d/1K2bYxy8yyqGpD3NZKcGv09LNBELLAxYI/view",
+  },
+  {
+    title: "Hawaiian Seed Gardens Digital Tools",
+    description:
+      "AR, GIS, and web tools to promote rain-garden adoption for stormwater management, with Protect & Preserve Hawaiʻi.",
+    details:
+      "A project for Protect and Preserve Hawaiʻi (PPH) supporting ecosystem restoration in the Ala Wai Watershed. Designed from homeowner surveys and volunteer consultations, the tools make rain-garden adoption easier and more engaging. Published in Punawai, Vol. 1 (see the Papers section).",
+    highlights: [
+      "Built an Augmented Reality tool to visualize rain-garden designs in place.",
+      "Created an ArcGIS StoryMap for education and community outreach.",
+      "Developed SeedSync, a digital platform for tracking and monitoring garden conditions.",
+    ],
+    tech: ["Augmented Reality", "ArcGIS / GIS", "Web"],
+    liveUrl: "https://www.protectpreservehi.org/satellite-rain-garden-initiative",
+    repoUrl: "https://github.com/sgiraldogodoy/pphar",
   },
   {
     title: "Personal Website (from scratch)",
@@ -232,6 +253,17 @@ export const papers: Paper[] = [
     tags: ["Augmented Reality", "GIS", "Web Tools", "Sustainability"],
     pdfUrl: "https://wp.wpi.edu/hawaii/files/2025/05/Punawai-Vol-1.pdf#page=55",
     link: "https://wp.wpi.edu/hawaii/digital-tools-for-making-and-monitoring-of-hawaiian-seed-gardens/",
+  },
+  {
+    title: "Robotic Manipulation: A Vision-Guided 4-DOF Manipulator",
+    venue: "WPI RBE 3001 — Unified Robotics III",
+    date: "Aug 2025 — Oct 2025",
+    description:
+      "A technical report on designing and programming a 4-DOF robotic manipulator with forward/inverse kinematics, trajectory generation, and computer vision for autonomous pick-and-place sorting. A demo video accompanies the report.",
+    tags: ["Robotics", "Kinematics", "Computer Vision"],
+    pdfUrl:
+      "https://docs.google.com/document/d/1wSgJTY_EX0tSnPjlOE8QADEPLxz5poUZT6myrqJQp3g/edit?usp=sharing",
+    link: "https://drive.google.com/file/d/1K2bYxy8yyqGpD3NZKcGv09LNBELLAxYI/view",
   },
   // Add more papers here following the same shape.
 ];

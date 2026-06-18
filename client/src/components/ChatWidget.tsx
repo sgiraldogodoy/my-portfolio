@@ -32,7 +32,7 @@ export default function ChatWidget() {
         ...next,
         {
           role: "assistant",
-          content: "Sorry — I couldn't reach the server. Please try again later.",
+          content: "Sorry, I couldn't reach the server. Please try again later.",
         },
       ]);
     } finally {

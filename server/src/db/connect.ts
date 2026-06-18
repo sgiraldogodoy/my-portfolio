@@ -7,7 +7,7 @@ import { env } from "../config/env.js";
  */
 export async function connectDb(): Promise<boolean> {
   if (!env.mongoUri) {
-    console.warn("⚠️  MONGODB_URI not set — running without a database.");
+    console.warn("⚠️  MONGODB_URI not set, running without a database.");
     return false;
   }
   try {

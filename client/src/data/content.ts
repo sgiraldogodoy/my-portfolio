@@ -8,7 +8,7 @@ export const profile = {
   name: "Santiago Giraldo Godoy",
   role: "Secure Full-Stack & Web Developer",
   tagline:
-    "I build secure, AI-powered web applications end-to-end — from polished React frontends to robust Node & cloud backends.",
+    "I build secure, AI-powered web apps from start to finish, from polished React frontends to solid Node and cloud backends.",
   location: "Worcester, MA, USA",
   email: "sgiraldog@gmail.com",
   phone: "+1 (774) 253-0905",
@@ -18,16 +18,16 @@ export const profile = {
     linkedin: "https://www.linkedin.com/in/santiagogiraldog",
     twitter: "",
   },
-  // Path to your resume in client/public — drop your PDF there.
+  // Path to your resume in client/public. Drop your PDF there.
   resumeUrl: "/resume.pdf",
 };
 
 export const about = {
-  // Written in first person — also fed to the AI assistant as context.
+  // Written in first person. This also gives the AI assistant context.
   paragraphs: [
-    "I'm a Computer Science graduate from Worcester Polytechnic Institute (High Distinction, 3.83 GPA, minor in Robotics Engineering), specializing in secure full-stack web development. I work across the MERN stack — MongoDB, Express, React, and Node — with TypeScript end to end.",
-    "I pair that with hands-on AI experience: at Oracle I raised AI-agent response quality through prompt engineering and Retrieval-Augmented Generation, and I've trained deep-learning models and built fast data pipelines. I build software that's not just functional but secure and privacy-conscious — from authentication and access control to protecting sensitive user data.",
-    "I'm available for freelance work: secure full-stack web apps, MERN MVPs, API development, and AI-powered features.",
+    "I'm a Computer Science graduate from Worcester Polytechnic Institute, where I earned High Distinction with a 3.83 GPA and a minor in Robotics Engineering. I focus on secure full-stack web development, working across the MERN stack (MongoDB, Express, React, and Node) with TypeScript throughout.",
+    "I also really enjoy building with AI. At Oracle I improved an AI agent's responses through prompt engineering and Retrieval-Augmented Generation, and along the way I've trained deep-learning models and built fast data pipelines. Whatever I'm working on, I keep it secure and privacy-conscious, from authentication and access control to protecting sensitive user data.",
+    "I'm available for freelance work, whether that's a secure full-stack web app, a quick MERN MVP, API development, or adding AI features to a product you already have.",
   ],
 };
 
@@ -63,7 +63,7 @@ export const skills: { category: string; items: Skill[] }[] = [
     items: [
       { name: "Secure Auth & JWT", level: 80 },
       { name: "Data Privacy & Access Control", level: 78 },
-      { name: "Agile · OOD · Design Patterns", level: 85 },
+      { name: "Agile, OOD, Design Patterns", level: 85 },
     ],
   },
 ];
@@ -85,13 +85,13 @@ export const projects: Project[] = [
   {
     title: "School Benchmarking Web App",
     description:
-      "Cloud-hosted MERN app with secure logins and a comparative analytics dashboard, built with Osprey Software.",
+      "A cloud-hosted MERN app with secure logins and a comparative analytics dashboard, built with Osprey Software.",
     details:
-      "A 5-person team prototype for Osprey Software: a private-school benchmarking platform running in the cloud. Private schools submit annual data through an improved UI and compare themselves against peers in their group or region — with enforced data access and privacy throughout.",
+      "A five-person team prototype for Osprey Software: a private-school benchmarking platform that runs in the cloud. Schools enter their annual data through a clean interface and see how they compare to peers in their group or region, with data access and privacy enforced the whole way through.",
     highlights: [
       "Built the full app on the MERN stack (MongoDB, Express, React, Node) with TypeScript and Tailwind.",
-      "Implemented secure logins and enforced data access/privacy controls.",
-      "Designed a dashboard for comparative analyses across schools by group and region.",
+      "Implemented secure logins along with enforced data access and privacy controls.",
+      "Designed a dashboard for comparing schools by group and region.",
     ],
     tech: ["React", "Node", "Express", "MongoDB", "TypeScript", "Tailwind"],
     liveUrl: "https://webware-c26-team-i-term-project.onrender.com/login",
@@ -101,13 +101,13 @@ export const projects: Project[] = [
   {
     title: "Vintage Movie Vault",
     description:
-      "A secure MERN app where each user keeps a private, persistent movie collection behind JWT authentication.",
+      "A secure MERN app where every user keeps a private, persistent movie collection behind JWT authentication.",
     details:
-      "A full-stack web app for logging, editing, and deleting movies you've watched. Every user gets their own private collection stored in MongoDB, protected end-to-end by token-based auth — a compact demonstration of secure full-stack patterns.",
+      "A full-stack app for logging, editing, and deleting the movies you've watched. Each user gets their own private collection stored in MongoDB, protected end to end by token-based auth. It's a compact showcase of secure full-stack patterns.",
     highlights: [
-      "JWT authentication with bcrypt-hashed credentials; tokens verified by Express middleware on every protected route.",
-      "Ownership-enforced CRUD — users can only read or modify their own movies, so ownership can't be spoofed from the frontend.",
-      "Component-based React (Vite) frontend with hooks; Express API serving the built client as a single Render web service.",
+      "JWT authentication with bcrypt-hashed credentials, verified by Express middleware on every protected route.",
+      "Ownership-enforced CRUD, so users can only touch their own movies and ownership can't be faked from the frontend.",
+      "Component-based React (Vite) frontend with hooks, plus an Express API that serves the built client as a single Render web service.",
     ],
     tech: ["React", "Express", "MongoDB", "JWT", "Bootstrap"],
     liveUrl: "https://a4-sgiraldogodoy.onrender.com",
@@ -116,14 +116,14 @@ export const projects: Project[] = [
   {
     title: "AI for Impact: Inferring Suicidal Ideation",
     description:
-      "Award-winning MQP: a Kotlin Multiplatform mental-health app with passive multi-modal smartphone sensing.",
+      "An award-winning capstone: a Kotlin Multiplatform mental-health app with passive smartphone sensing.",
     details:
-      "My Major Qualifying Project (capstone), recipient of WPI's 2026 Data Science Outstanding MQP Award. Part of the NIH-supported LEMURS app — a cross-platform tool that passively collects smartphone data to flag suicide risk from behavioral patterns and support early intervention for students.",
+      "My Major Qualifying Project (capstone), which earned WPI's 2026 Data Science Outstanding MQP Award. It's part of the NIH-supported LEMURS app, a cross-platform tool that passively collects smartphone data to flag suicide risk from behavioral patterns and help students get support sooner.",
     highlights: [
-      "Re-architected a Kotlin Multiplatform app to ~80% shared Android/iOS code for maintainability and cross-platform parity.",
-      "Built passive data collection (motion, app usage, Bluetooth, surveys) for multi-modal behavioral analysis.",
-      "Machine-learning models reached 85.7% recall predicting suicide risk from screentime data.",
-      "Ran exploratory data analysis and feature engineering to correlate digital behavior with self-reported ideation.",
+      "Re-architected a Kotlin Multiplatform app to share about 80% of its code across Android and iOS for easier maintenance and parity.",
+      "Built passive data collection (motion, app usage, Bluetooth, and surveys) for multi-modal behavioral analysis.",
+      "Helped get machine-learning models to 85.7% recall when predicting suicide risk from screentime data.",
+      "Ran exploratory data analysis and feature engineering to connect digital behavior with self-reported ideation.",
     ],
     tech: ["Kotlin Multiplatform", "Machine Learning", "Mobile"],
     liveUrl: "https://apps.apple.com/us/app/wpi-lemurs/id6759763937",
@@ -135,11 +135,11 @@ export const projects: Project[] = [
     description:
       "Backend technical lead on a 10-person Agile team building hospital pathfinding, a map editor, and an EMR.",
     details:
-      "A software-engineering studio project for Brigham & Women's Hospital. I led the backend subgroup, owning the data model and the API layer connecting frontend and backend.",
+      "A software-engineering studio project for Brigham and Women's Hospital. I led the backend subgroup and owned the data model along with the API layer that connects the frontend and backend.",
     highlights: [
-      "Authored ~90% of the database schema (ERD + Prisma) and the tRPC routes.",
-      "Built hospital pathfinding, a map editor, and a functional EMR input.",
-      "Applied Agile methodologies and software design patterns across the team.",
+      "Wrote about 90% of the database schema (ERD and Prisma) and the tRPC routes.",
+      "Built hospital pathfinding, a map editor, and a working EMR input.",
+      "Applied Agile methods and software design patterns across the team.",
     ],
     tech: ["React", "TypeScript", "tRPC", "Prisma", "PostgreSQL"],
     repoUrl: "https://github.com/sgiraldogodoy/Soft-Eng-App",
@@ -147,40 +147,40 @@ export const projects: Project[] = [
   {
     title: "Spreadsheet Application",
     description:
-      "A full-stack spreadsheet engine (Spring Boot + React) with a custom formula parser and dependency tracking.",
+      "A full-stack spreadsheet engine (Spring Boot and React) with a custom formula parser and dependency tracking.",
     details:
-      "A from-scratch spreadsheet built around clean architecture and classic design patterns, with a focus on correctness and extensibility.",
+      "A spreadsheet built from scratch around clean architecture and classic design patterns, with a focus on getting the details right and keeping it easy to extend.",
     highlights: [
-      "Followed MVC to separate frontend, backend, and business logic.",
+      "Followed MVC to keep the frontend, backend, and business logic separate.",
       "Custom expression parser using the Shunting Yard algorithm for arithmetic and aggregates (SUM, COUNT, AVE).",
-      "Evaluation engine using Composite, Factory, and Observer patterns with cell/range references, dependency tracking, and circular-reference detection.",
-      "Comprehensive JUnit tests covering parsing and edge cases.",
+      "Evaluation engine built with the Composite, Factory, and Observer patterns, supporting cell and range references, dependency tracking, and circular-reference detection.",
+      "Thorough JUnit tests covering parsing logic and edge cases.",
     ],
     tech: ["Java", "Spring Boot", "React", "Design Patterns"],
   },
   {
     title: "Traffic Sign Recognition (CNN)",
     description:
-      "A custom CNN reaching 99.50% accuracy for traffic-sign classification, plus fine-tuned transfer models.",
+      "A custom CNN that reaches 99.50% accuracy on traffic-sign classification, plus fine-tuned transfer models.",
     details:
-      "A machine-learning project comparing a custom convolutional network against fine-tuned pretrained backbones for traffic-sign classification.",
+      "A machine-learning project that puts a custom convolutional network up against fine-tuned pretrained models for classifying traffic signs.",
     highlights: [
-      "Custom CNN achieving 99.50% classification accuracy.",
-      "Fine-tuned ResNet50 and VGG16 from 70% to 95%+ accuracy.",
-      "Data preprocessing and augmentation to improve generalization.",
+      "Custom CNN reaching 99.50% classification accuracy.",
+      "Fine-tuned ResNet50 and VGG16 from 70% up to 95% and higher.",
+      "Data preprocessing and augmentation to help the models generalize.",
     ],
     tech: ["Python", "PyTorch", "Deep Learning"],
   },
   {
     title: "Robotic Manipulation System",
     description:
-      "A vision-guided 4-DOF robotic arm in MATLAB performing autonomous pick-and-place sorting.",
+      "A vision-guided 4-DOF robotic arm in MATLAB that sorts objects on its own.",
     details:
-      "Designed and programmed a 4-degree-of-freedom manipulator that detects, localizes, and sorts objects autonomously.",
+      "I designed and programmed a four-degree-of-freedom manipulator that detects, locates, and sorts objects autonomously.",
     highlights: [
-      "Forward and inverse kinematics for precise end-effector positioning in task space.",
+      "Forward and inverse kinematics for precise end-effector positioning.",
       "Trajectory generation and velocity kinematics for smooth, continuous motion.",
-      "Integrated computer vision (intrinsic & extrinsic calibration) to map image space to robot coordinates.",
+      "Computer vision, with intrinsic and extrinsic calibration, to map what the camera sees into robot coordinates.",
     ],
     tech: ["MATLAB", "Robotics", "Computer Vision"],
     repoUrl: "https://github.com/sgiraldogodoy/RBE3001_A25_02",
@@ -189,13 +189,13 @@ export const projects: Project[] = [
   {
     title: "Hawaiian Seed Gardens Digital Tools",
     description:
-      "AR, GIS, and web tools to promote rain-garden adoption for stormwater management, with Protect & Preserve Hawaiʻi.",
+      "AR, GIS, and web tools that encourage rain-garden adoption for stormwater management, made with Protect and Preserve Hawaiʻi.",
     details:
-      "A project for Protect and Preserve Hawaiʻi (PPH) supporting ecosystem restoration in the Ala Wai Watershed. Designed from homeowner surveys and volunteer consultations, the tools make rain-garden adoption easier and more engaging. Published in Punawai, Vol. 1 (see the Papers section).",
+      "A project for Protect and Preserve Hawaiʻi (PPH) supporting ecosystem restoration in the Ala Wai Watershed. We shaped the tools around homeowner surveys and volunteer conversations to make rain gardens easier and more appealing to adopt. It was published in Punawai, Vol. 1 (see the Papers section).",
     highlights: [
-      "Built an Augmented Reality tool to visualize rain-garden designs in place.",
+      "Built an augmented reality tool to preview rain-garden designs right where they would go.",
       "Created an ArcGIS StoryMap for education and community outreach.",
-      "Developed SeedSync, a digital platform for tracking and monitoring garden conditions.",
+      "Developed SeedSync, a platform for tracking and monitoring garden conditions.",
     ],
     tech: ["Augmented Reality", "ArcGIS / GIS", "Web"],
     liveUrl: "https://www.protectpreservehi.org/satellite-rain-garden-initiative",
@@ -204,13 +204,13 @@ export const projects: Project[] = [
   {
     title: "Personal Website (from scratch)",
     description:
-      "A hand-built personal site with semantic HTML, a custom palette, and a photography gallery — deployed on Render.",
+      "A hand-built personal site with semantic HTML, a custom palette, and a photography gallery, deployed on Render.",
     details:
-      "An earlier personal website built without a framework, focused on web fundamentals and a clean deployment workflow.",
+      "An earlier personal site built without any framework, focused on web fundamentals and a clean deployment workflow.",
     highlights: [
       "Semantic HTML and a Flexbox navigation bar for accessible, well-structured markup.",
-      "Custom color palette via CSS variables and a serif/sans-serif type pairing.",
-      "Photography page with a form and a responsive CSS Grid image gallery; served by a Node/Express app on Render.",
+      "Custom color palette with CSS variables and a serif and sans-serif type pairing.",
+      "A photography page with a form and a responsive CSS Grid gallery, served by a Node and Express app on Render.",
     ],
     tech: ["HTML", "CSS", "JavaScript", "Node.js"],
     liveUrl: "https://santiago-giraldo-godoy.onrender.com",
@@ -233,33 +233,33 @@ export type Paper = {
 export const papers: Paper[] = [
   {
     title: "AI for Impact: Inferring Suicidal Ideation via Smartphones",
-    venue: "WPI Major Qualifying Project (Capstone) · advised by Prof. Elke Rundensteiner",
-    date: "Aug 2025 — May 2026",
+    venue: "WPI Major Qualifying Project (Capstone), advised by Prof. Elke Rundensteiner",
+    date: "Aug 2025 - May 2026",
     authors:
       "S. Giraldo Godoy, J. Buwembo, E. Mastrangelo, J. Murphy, M. El Chalfoun, E. Li",
     description:
-      "The NIH-supported LEMURS app passively collects smartphone signals (motion, app usage, Bluetooth, surveys) to infer suicide risk from behavioral patterns. Machine-learning models reached 85.7% recall predicting risk from screentime data, with the goal of enabling early intervention for students on both Android and iOS.",
+      "The NIH-supported LEMURS app passively collects smartphone signals (motion, app usage, Bluetooth, and surveys) to infer suicide risk from behavioral patterns. The team's machine-learning models reached 85.7% recall predicting risk from screentime data, with the goal of helping students get support sooner on both Android and iOS.",
     award: "WPI 2026 Data Science Outstanding MQP Award",
     tags: ["Machine Learning", "Digital Health", "Mobile Sensing"],
     link: "https://digital.wpi.edu/concern/student_works/hx11xk99f",
   },
   {
     title: "Digital Tools for Making and Monitoring of Hawaiian Seed Gardens",
-    venue: "Punawai, Vol. 1 — WPI Hawaiʻi Project Center",
-    date: "Aug 2025 — Mar 2025",
+    venue: "Punawai, Vol. 1, WPI Hawaiʻi Project Center",
+    date: "Jan 2025 - Mar 2025",
     authors: "K. Brown, J. De La Cruz, S. Giraldo, P. Gupta, S. Wiernik",
     description:
-      "In collaboration with Protect and Preserve Hawaiʻi, we built digital tools to promote rain-garden adoption for stormwater management and ecosystem restoration in the Ala Wai Watershed: an Augmented Reality visualization tool, an ArcGIS StoryMap for outreach, and SeedSync, a platform for garden monitoring — designed from homeowner surveys and volunteer consultations.",
+      "Working with Protect and Preserve Hawaiʻi, we built digital tools to encourage rain-garden adoption for stormwater management and ecosystem restoration in the Ala Wai Watershed: an augmented reality visualization tool, an ArcGIS StoryMap for outreach, and SeedSync, a platform for garden monitoring. We shaped the design around homeowner surveys and volunteer conversations.",
     tags: ["Augmented Reality", "GIS", "Web Tools", "Sustainability"],
     pdfUrl: "https://wp.wpi.edu/hawaii/files/2025/05/Punawai-Vol-1.pdf#page=55",
     link: "https://wp.wpi.edu/hawaii/digital-tools-for-making-and-monitoring-of-hawaiian-seed-gardens/",
   },
   {
     title: "Robotic Manipulation: A Vision-Guided 4-DOF Manipulator",
-    venue: "WPI RBE 3001 — Unified Robotics III",
-    date: "Aug 2025 — Oct 2025",
+    venue: "WPI RBE 3001, Unified Robotics III",
+    date: "Aug 2025 - Oct 2025",
     description:
-      "A technical report on designing and programming a 4-DOF robotic manipulator with forward/inverse kinematics, trajectory generation, and computer vision for autonomous pick-and-place sorting. A demo video accompanies the report.",
+      "A technical report on designing and programming a 4-DOF robotic manipulator with forward and inverse kinematics, trajectory generation, and computer vision for autonomous pick-and-place sorting. A demo video goes along with the report.",
     tags: ["Robotics", "Kinematics", "Computer Vision"],
     pdfUrl:
       "https://docs.google.com/document/d/1wSgJTY_EX0tSnPjlOE8QADEPLxz5poUZT6myrqJQp3g/edit?usp=sharing",
@@ -275,33 +275,65 @@ export type Experience = {
   points: string[];
 };
 
+// Listed most recent first.
 export const experience: Experience[] = [
   {
     role: "Software Engineer Intern",
     org: "Oracle",
-    period: "May 2025 — Aug 2025",
+    period: "May 2025 - Aug 2025",
     points: [
-      "Improved AI-agent response quality via prompt engineering and Retrieval-Augmented Generation (RAG) workflows, raising human-like response rates by 50%.",
-      "Re-engineered data unification across sources with SQL and Java endpoints, cutting per-entry migration from 6s to 0.2s (≈97% faster).",
-      "Built Java endpoints for data filtration, error handling, storage, and retrieval, improving accuracy by 25%.",
+      "Boosted an AI agent's response quality with prompt engineering and Retrieval-Augmented Generation, lifting human-like response rates by 50%.",
+      "Rebuilt how data was unified across sources using SQL and Java endpoints, cutting migration from 6 seconds to 0.2 seconds per entry (about 97% faster).",
+      "Wrote Java endpoints for data filtering, error handling, and storage that improved accuracy by 25%.",
+      "Helped ship a beta troubleshooting agent aimed at cutting expert workload and resource use by 60%.",
     ],
   },
   {
-    role: "AI Project Worker",
-    org: "Worcester Polytechnic Institute",
-    period: "Jan 2023 — Dec 2024",
+    role: "Residential Advisor",
+    org: "WPI Housing & Residential Services",
+    period: "Aug 2024 - May 2026",
     points: [
-      "Trained machine-vision models on 300+ images/week to enhance the AI's recognition capabilities.",
-      "Built AI software safeguarding 5th-grade students' confidential information, ensuring data privacy for 1,000+ students.",
+      "Built a welcoming, inclusive community by running events, mediating conflicts, and supporting residents.",
+      "Kept residents safe by responding to crises and documenting incidents during on-call shifts.",
+      "Worked with Residential Services staff on programming, move-ins and move-outs, and health and safety checks.",
+    ],
+  },
+  {
+    role: "Lead Instructor",
+    org: "iDTech (Bentley Camp)",
+    period: "Jun 2024 - Jul 2024",
+    points: [
+      "Taught 80+ students across seven week-long classes how to design, build, program, and pilot VEX V5 battle bots.",
+      "Led a team of 10 instructors, keeping things running smoothly for 800+ campers aged 7 to 17.",
+      "Handled medical situations in the health director's absence, administering medication safely.",
     ],
   },
   {
     role: "Chief Operating Officer",
     org: "Universal Education Initiative (UEI)",
-    period: "Sep 2023 — Sep 2024",
+    period: "Sep 2023 - Sep 2024",
     points: [
-      "Coordinated 5 teams and day-to-day operations, improving operational efficiency and goal alignment.",
-      "Set timelines, roles, and objectives, and produced biweekly performance reports for the CEO to guide strategic decisions.",
+      "Ran day-to-day operations and kept five teams in sync, which improved overall efficiency.",
+      "Set timelines, roles, and company objectives to align everyone around shared goals.",
+      "Tracked team performance and wrote biweekly reports for the CEO to support decision-making.",
+    ],
+  },
+  {
+    role: "Peer Tutor",
+    org: "WPI Academic Resource Center",
+    period: "Aug 2023 - May 2026",
+    points: [
+      "Helped students become independent learners by breaking down tough concepts in C++ and Java.",
+      "Reinforced material from 10 courses, including calculus and computer science, with about 25% of students coming back for more sessions.",
+    ],
+  },
+  {
+    role: "AI Project Worker",
+    org: "Worcester Polytechnic Institute",
+    period: "Jan 2023 - Dec 2024",
+    points: [
+      "Trained machine-vision models on 300+ images a week to sharpen the AI's recognition.",
+      "Built AI software that protected confidential information for more than 1,000 fifth-grade students.",
     ],
   },
 ];

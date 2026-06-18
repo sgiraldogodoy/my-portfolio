@@ -5,13 +5,13 @@ import { aiEnabled, generateReply } from "../services/ai.js";
 
 export const chatRouter = Router();
 
-// Stricter limit on the AI endpoint — it costs money per call.
+// Stricter limit on the AI endpoint since it costs money per call.
 const chatLimiter = rateLimit({
   windowMs: 60 * 1000,
   limit: 10,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: "Too many messages — please slow down." },
+  message: { error: "Too many messages, please slow down." },
 });
 
 const chatSchema = z.object({

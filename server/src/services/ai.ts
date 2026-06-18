@@ -45,5 +45,5 @@ export async function generateReply(messages: ChatTurn[]): Promise<string> {
     .join("")
     .trim();
 
-  return text || "Sorry, I didn't catch that — could you rephrase?";
+  return text || "Sorry, I didn't catch that. Could you rephrase?";
 }

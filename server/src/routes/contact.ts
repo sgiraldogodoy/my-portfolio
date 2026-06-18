@@ -18,8 +18,8 @@ contactRouter.post("/", async (req, res, next) => {
     if (dbReady()) {
       await Message.create({ ...data, ip: req.ip });
     } else {
-      // No DB configured — log so the message isn't silently lost in dev.
-      console.log("📨 Contact (not persisted — no DB):", data);
+      // No DB configured, so log it to avoid silently losing the message in dev.
+      console.log("📨 Contact (not persisted, no DB):", data);
     }
 
     // TODO: wire up an email notification (e.g. AWS SES) here.

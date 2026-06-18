@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Tailwind v4 theme tokens — tweak these to rebrand the whole site at once. */
+/* Tailwind v4 theme tokens. Tweak these to rebrand the whole site at once. */
 @theme {
   --color-bg: #0a0a0f;
   --color-surface: #14141c;

@@ -15,7 +15,7 @@ const options = [
   {
     n: 2,
     title: "Orbiting Tech Galaxy",
-    blurb: "Technologies orbit you in category rings. Tap one to inspect.",
+    blurb: "Categories orbit you. Tap one to zoom into that category's skills; use the back arrow to return.",
     el: <GalaxyStack />,
   },
   {

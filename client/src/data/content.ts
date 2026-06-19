@@ -14,7 +14,7 @@ export const profile = {
   phone: "+1 (774) 253-0905",
   available: true, // shows an "available for work" badge
   socials: {
-    github: "https://github.com/sgiraldog18",
+    github: "https://github.com/sgiraldogodoy",
     linkedin: "https://www.linkedin.com/in/santiagogiraldog",
     twitter: "",
   },
@@ -83,6 +83,23 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: "AI for Impact: Inferring Suicidal Ideation",
+    description:
+        "An award-winning capstone: a Kotlin Multiplatform mental-health app with passive smartphone sensing.",
+    details:
+        "My Major Qualifying Project (capstone), which earned WPI's 2026 Data Science Outstanding MQP Award. It's part of the NIH-supported LEMURS app, a cross-platform tool that passively collects smartphone data to flag suicide risk from behavioral patterns and help students get support sooner.",
+    highlights: [
+      "Re-architected a Kotlin Multiplatform app to share about 80% of its code across Android and iOS for easier maintenance and parity.",
+      "Built passive data collection (motion, app usage, Bluetooth, and surveys) for multi-modal behavioral analysis.",
+      "Helped get machine-learning models to 85.7% recall when predicting suicide risk from screentime data.",
+      "Ran exploratory data analysis and feature engineering to connect digital behavior with self-reported ideation.",
+    ],
+    tech: ["Kotlin Multiplatform", "Machine Learning", "Mobile"],
+    liveUrl: "https://apps.apple.com/us/app/wpi-lemurs/id6759763937",
+    repoUrl: "https://github.com/sgiraldogodoy/lemurs-kmp-app",
+    featured: true,
+  },
+  {
     title: "School Benchmarking Web App",
     description:
       "A cloud-hosted MERN app with secure logins and a comparative analytics dashboard, built with Osprey Software.",
@@ -112,23 +129,6 @@ export const projects: Project[] = [
     tech: ["React", "Express", "MongoDB", "JWT", "Bootstrap"],
     liveUrl: "https://a4-sgiraldogodoy.onrender.com",
     repoUrl: "https://github.com/sgiraldogodoy/MovieVault",
-  },
-  {
-    title: "AI for Impact: Inferring Suicidal Ideation",
-    description:
-      "An award-winning capstone: a Kotlin Multiplatform mental-health app with passive smartphone sensing.",
-    details:
-      "My Major Qualifying Project (capstone), which earned WPI's 2026 Data Science Outstanding MQP Award. It's part of the NIH-supported LEMURS app, a cross-platform tool that passively collects smartphone data to flag suicide risk from behavioral patterns and help students get support sooner.",
-    highlights: [
-      "Re-architected a Kotlin Multiplatform app to share about 80% of its code across Android and iOS for easier maintenance and parity.",
-      "Built passive data collection (motion, app usage, Bluetooth, and surveys) for multi-modal behavioral analysis.",
-      "Helped get machine-learning models to 85.7% recall when predicting suicide risk from screentime data.",
-      "Ran exploratory data analysis and feature engineering to connect digital behavior with self-reported ideation.",
-    ],
-    tech: ["Kotlin Multiplatform", "Machine Learning", "Mobile"],
-    liveUrl: "https://apps.apple.com/us/app/wpi-lemurs/id6759763937",
-    repoUrl: "https://github.com/sgiraldogodoy/lemurs-kmp-app",
-    featured: true,
   },
   {
     title: "Hospital App Prototype (Brigham & Women's)",

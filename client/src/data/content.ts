@@ -128,7 +128,7 @@ export const projects: Project[] = [
     ],
     tech: ["React", "Express", "MongoDB", "JWT", "Bootstrap"],
     liveUrl: "https://a4-sgiraldogodoy.onrender.com",
-    repoUrl: "https://github.com/sgiraldogodoy/MovieVault",
+    repoUrl: "https://github.com/sgiraldogodoy/movieVault",
   },
   {
     title: "Hospital App Prototype (Brigham & Women's)",
@@ -157,6 +157,7 @@ export const projects: Project[] = [
       "Thorough JUnit tests covering parsing logic and edge cases.",
     ],
     tech: ["Java", "Spring Boot", "React", "Design Patterns"],
+    repoUrl: "https://github.com/sgiraldogodoy/spreadsheetApp",
   },
   {
     title: "Traffic Sign Recognition (CNN)",
@@ -183,7 +184,7 @@ export const projects: Project[] = [
       "Computer vision, with intrinsic and extrinsic calibration, to map what the camera sees into robot coordinates.",
     ],
     tech: ["MATLAB", "Robotics", "Computer Vision"],
-    repoUrl: "https://github.com/sgiraldogodoy/RBE3001_A25_02",
+    repoUrl: "https://github.com/sgiraldogodoy/RBE3001",
     videoUrl: "https://drive.google.com/file/d/1K2bYxy8yyqGpD3NZKcGv09LNBELLAxYI/view",
   },
   {
@@ -214,7 +215,7 @@ export const projects: Project[] = [
     ],
     tech: ["HTML", "CSS", "JavaScript", "Node.js"],
     liveUrl: "https://santiago-giraldo-godoy.onrender.com",
-    repoUrl: "https://github.com/sgiraldogodoy/Personal-Page",
+    repoUrl: "https://github.com/sgiraldogodoy/photography",
   },
 ];
 

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Section from "./Section";
 import { experience, type Experience as Exp } from "../data/content";
@@ -26,11 +27,13 @@ const yearMarks = Array.from({ length: lastYear - firstYear + 1 }, (_, i) => {
 const LABEL = "12rem"; // label column width + gap; keeps axis aligned with tracks
 
 export default function Experience() {
+  const [active, setActive] = useState<number | null>(null);
+
   return (
     <Section id="experience" title="Experience">
       <p className="mx-auto -mt-6 mb-12 max-w-xl text-center text-white/55">
-        Each bar runs from the start to the end of a role. Hover a bar to expand what
-        I did there.
+        Each bar runs from the start to the end of a role. Hover a bar to spotlight that
+        role and expand what I did there.
       </p>
 
       {/* Desktop: Gantt-style timeline */}
@@ -64,60 +67,91 @@ export default function Experience() {
           </div>
 
           <div className="space-y-2">
-            {experience.map((e, i) => (
-              <motion.div
-                key={e.role + e.org}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ delay: i * 0.05 }}
-                className="group"
-              >
-                <div className="flex items-center gap-4">
-                  {/* label */}
-                  <div className="shrink-0 text-right" style={{ width: "11rem" }}>
-                    <p className="text-sm font-semibold leading-tight">{e.role}</p>
-                    <p className="text-xs text-white/50">{e.org}</p>
-                  </div>
-
-                  {/* track + bar */}
-                  <div className="relative h-9 flex-1">
-                    <button
-                      className="absolute inset-y-0 my-auto flex h-7 items-center overflow-hidden rounded-full bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent-2)] px-3 text-left shadow-[0_0_18px_-6px_var(--color-accent)] outline-none ring-[var(--color-accent)]/60 transition group-hover:ring-2 group-focus-within:ring-2"
-                      style={{
-                        left: `${leftPct(e)}%`,
-                        width: `${widthPct(e)}%`,
-                        minWidth: "3.5rem",
-                      }}
-                      aria-label={`${e.role} at ${e.org}, ${e.period}`}
-                    >
-                      <span className="truncate font-mono text-[11px] font-medium text-white/95">
-                        {e.period}
-                      </span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* detail (expands on hover/focus) */}
-                <div className="grid grid-rows-[0fr] opacity-0 transition-all duration-500 group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
-                  <div className="overflow-hidden">
+            {experience.map((e, i) => {
+              const isActive = active === i;
+              const dimmed = active !== null && !isActive;
+              return (
+                <motion.div
+                  key={e.role + e.org}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ delay: i * 0.05 }}
+                  onMouseEnter={() => setActive(i)}
+                  onMouseLeave={() => setActive(null)}
+                  className={`relative transition-all duration-300 ${
+                    isActive ? "z-10" : ""
+                  } ${dimmed ? "opacity-30 blur-[1px]" : "opacity-100"}`}
+                >
+                  <div className="flex items-center gap-4">
+                    {/* label */}
                     <div
-                      className="mt-2 rounded-xl border border-white/10 border-l-2 border-l-[var(--color-accent)] bg-[var(--color-surface)] p-4"
-                      style={{ marginLeft: LABEL }}
+                      className={`shrink-0 text-right transition-all duration-300 ${
+                        isActive ? "scale-[1.03]" : ""
+                      }`}
+                      style={{ width: "11rem", transformOrigin: "right center" }}
                     >
-                      <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[var(--color-accent-2)]">
-                        {e.period}
+                      <p
+                        className={`text-sm font-semibold leading-tight transition-colors ${
+                          isActive ? "text-[var(--color-accent-2)]" : ""
+                        }`}
+                      >
+                        {e.role}
                       </p>
-                      <ul className="list-disc space-y-1.5 pl-5 text-sm text-white/75">
-                        {e.points.map((pt, j) => (
-                          <li key={j}>{pt}</li>
-                        ))}
-                      </ul>
+                      <p className="text-xs text-white/50">{e.org}</p>
+                    </div>
+
+                    {/* track + bar */}
+                    <div className="relative h-9 flex-1">
+                      <button
+                        onFocus={() => setActive(i)}
+                        onBlur={() => setActive(null)}
+                        className={`absolute inset-y-0 my-auto flex items-center overflow-hidden rounded-full bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent-2)] px-3 text-left outline-none transition-all duration-300 ${
+                          isActive
+                            ? "h-9 ring-2 ring-[var(--color-accent)] shadow-[0_0_30px_-4px_var(--color-accent)] saturate-150"
+                            : "h-6 shadow-[0_0_16px_-7px_var(--color-accent)]"
+                        }`}
+                        style={{
+                          left: `${leftPct(e)}%`,
+                          width: `${widthPct(e)}%`,
+                          minWidth: "3.5rem",
+                        }}
+                        aria-label={`${e.role} at ${e.org}, ${e.period}`}
+                      >
+                        <span className="truncate font-mono text-[11px] font-medium text-white/95">
+                          {e.period}
+                        </span>
+                      </button>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+
+                  {/* detail (expands when this role is active) */}
+                  <div
+                    className={`grid transition-all duration-500 ${
+                      isActive
+                        ? "grid-rows-[1fr] opacity-100"
+                        : "grid-rows-[0fr] opacity-0"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div
+                        className="mt-2 rounded-xl border border-white/10 border-l-2 border-l-[var(--color-accent)] bg-[var(--color-surface)] p-4"
+                        style={{ marginLeft: LABEL }}
+                      >
+                        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[var(--color-accent-2)]">
+                          {e.period}
+                        </p>
+                        <ul className="list-disc space-y-1.5 pl-5 text-sm text-white/75">
+                          {e.points.map((pt, j) => (
+                            <li key={j}>{pt}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>

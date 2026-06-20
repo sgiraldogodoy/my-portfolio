@@ -272,7 +272,9 @@ export const papers: Paper[] = [
 export type Experience = {
   role: string;
   org: string;
-  period: string;
+  period: string; // human-readable label
+  start: string; // "YYYY-MM" — used to place/size the timeline bar
+  end: string; // "YYYY-MM"
   points: string[];
 };
 
@@ -282,6 +284,8 @@ export const experience: Experience[] = [
     role: "Software Engineer Intern",
     org: "Oracle",
     period: "May 2025 - Aug 2025",
+    start: "2025-05",
+    end: "2025-08",
     points: [
       "Boosted an AI agent's response quality with prompt engineering and Retrieval-Augmented Generation, lifting human-like response rates by 50%.",
       "Rebuilt how data was unified across sources using SQL and Java endpoints, cutting migration from 6 seconds to 0.2 seconds per entry (about 97% faster).",
@@ -293,6 +297,8 @@ export const experience: Experience[] = [
     role: "Residential Advisor",
     org: "WPI Housing & Residential Services",
     period: "Aug 2024 - May 2026",
+    start: "2024-08",
+    end: "2026-05",
     points: [
       "Built a welcoming, inclusive community by running events, mediating conflicts, and supporting residents.",
       "Kept residents safe by responding to crises and documenting incidents during on-call shifts.",
@@ -303,6 +309,8 @@ export const experience: Experience[] = [
     role: "Lead Instructor",
     org: "iDTech (Bentley Camp)",
     period: "Jun 2024 - Jul 2024",
+    start: "2024-06",
+    end: "2024-07",
     points: [
       "Taught 80+ students across seven week-long classes how to design, build, program, and pilot VEX V5 battle bots.",
       "Led a team of 10 instructors, keeping things running smoothly for 800+ campers aged 7 to 17.",
@@ -313,6 +321,8 @@ export const experience: Experience[] = [
     role: "Chief Operating Officer",
     org: "Universal Education Initiative (UEI)",
     period: "Sep 2023 - Sep 2024",
+    start: "2023-09",
+    end: "2024-09",
     points: [
       "Ran day-to-day operations and kept five teams in sync, which improved overall efficiency.",
       "Set timelines, roles, and company objectives to align everyone around shared goals.",
@@ -323,6 +333,8 @@ export const experience: Experience[] = [
     role: "Peer Tutor",
     org: "WPI Academic Resource Center",
     period: "Aug 2023 - May 2026",
+    start: "2023-08",
+    end: "2026-05",
     points: [
       "Helped students become independent learners by breaking down tough concepts in C++ and Java.",
       "Reinforced material from 10 courses, including calculus and computer science, with about 25% of students coming back for more sessions.",
@@ -332,6 +344,8 @@ export const experience: Experience[] = [
     role: "AI Project Worker",
     org: "Worcester Polytechnic Institute",
     period: "Jan 2023 - Dec 2024",
+    start: "2023-01",
+    end: "2024-12",
     points: [
       "Trained machine-vision models on 300+ images a week to sharpen the AI's recognition.",
       "Built AI software that protected confidential information for more than 1,000 fifth-grade students.",

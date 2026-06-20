@@ -2,71 +2,146 @@ import { motion } from "framer-motion";
 import Section from "./Section";
 import { experience, type Experience as Exp } from "../data/content";
 
+// Convert "YYYY-MM" to an absolute month index for positioning on the axis.
+const ym = (s: string) => {
+  const [y, m] = s.split("-").map(Number);
+  return y * 12 + (m - 1);
+};
+
+const MIN = Math.min(...experience.map((e) => ym(e.start)));
+const MAX = Math.max(...experience.map((e) => ym(e.end)));
+const SPAN = MAX - MIN + 1; // inclusive month count
+
+const leftPct = (e: Exp) => ((ym(e.start) - MIN) / SPAN) * 100;
+const widthPct = (e: Exp) => ((ym(e.end) - ym(e.start) + 1) / SPAN) * 100;
+
+// Year gridlines / labels (one per January in range).
+const firstYear = Math.floor(MIN / 12);
+const lastYear = Math.floor(MAX / 12);
+const yearMarks = Array.from({ length: lastYear - firstYear + 1 }, (_, i) => {
+  const yr = firstYear + i;
+  return { yr, pos: ((yr * 12 - MIN) / SPAN) * 100 };
+});
+
+const LABEL = "12rem"; // label column width + gap; keeps axis aligned with tracks
+
 export default function Experience() {
   return (
     <Section id="experience" title="Experience">
-      <p className="mx-auto -mt-6 mb-16 max-w-xl text-center text-white/55">
-        My journey so far. Hover a node to expand what I did at each stop.
+      <p className="mx-auto -mt-6 mb-12 max-w-xl text-center text-white/55">
+        Each bar runs from the start to the end of a role. Hover a bar to expand what
+        I did there.
       </p>
 
-      <div className="relative mx-auto max-w-5xl">
-        {/* Central line (far left on mobile, centered on desktop). */}
-        <div className="absolute bottom-0 left-4 top-0 w-0.5 -translate-x-1/2 bg-gradient-to-b from-[var(--color-accent)] via-[var(--color-accent-2)]/60 to-transparent opacity-50 md:left-1/2" />
-
-        <div className="space-y-10 md:space-y-2">
-          {experience.map((e, i) => (
-            <TimelineItem key={e.role + e.org} item={e} flip={i % 2 === 1} index={i} />
+      {/* Desktop: Gantt-style timeline */}
+      <div className="hidden md:block">
+        {/* Year axis */}
+        <div className="relative mb-3 h-4" style={{ marginLeft: LABEL }}>
+          {yearMarks.map((m) => (
+            <span
+              key={m.yr}
+              className="absolute -translate-x-1/2 font-mono text-xs text-white/40"
+              style={{ left: `${m.pos}%` }}
+            >
+              {m.yr}
+            </span>
           ))}
         </div>
-      </div>
-    </Section>
-  );
-}
 
-function TimelineItem({ item, flip, index }: { item: Exp; flip: boolean; index: number }) {
-  // flip === false: summary left, detail card right.
-  // flip === true:  detail card left, summary right.
-  const summaryCol = flip ? "md:col-start-2 md:text-left md:pl-16" : "md:col-start-1 md:text-right md:pr-16";
-  const detailCol = flip
-    ? "md:col-start-1 md:row-start-1 md:pr-16"
-    : "md:col-start-2 md:row-start-1 md:pl-16";
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ delay: index * 0.05 }}
-      className="group relative md:grid md:grid-cols-2 md:items-center md:gap-x-8"
-    >
-      {/* Node on the line. */}
-      <span className="absolute left-4 top-1.5 z-10 h-5 w-5 -translate-x-1/2 rounded-full border-4 border-[var(--color-bg)] bg-[var(--color-accent)] shadow-[0_0_18px_-2px_var(--color-accent)] transition-transform duration-300 group-hover:scale-125 md:left-1/2" />
-
-      {/* Summary (always visible). */}
-      <div className={`pl-12 md:pl-0 ${summaryCol}`}>
-        <p className="font-mono text-xs uppercase tracking-widest text-[var(--color-accent-2)]">
-          {item.period}
-        </p>
-        <h3 className="mt-1 text-xl font-bold">{item.role}</h3>
-        <p className="text-white/55">{item.org}</p>
-      </div>
-
-      {/* Detail card (hover-reveal on desktop, always shown on mobile). */}
-      <div className={`pl-12 md:pl-0 ${detailCol}`}>
-        <div
-          className={`mt-3 rounded-2xl border border-white/10 bg-[var(--color-surface)] p-5 transition-all duration-500 md:mt-0 md:translate-y-3 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 ${
-            flip
-              ? "md:border-r-2 md:border-r-[var(--color-accent)] md:text-right"
-              : "md:border-l-2 md:border-l-[var(--color-accent)]"
-          }`}
-        >
-          <ul className="space-y-2 text-sm text-white/75">
-            {item.points.map((pt, j) => (
-              <li key={j}>{pt}</li>
+        <div className="relative">
+          {/* gridlines spanning all rows */}
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0"
+            style={{ left: LABEL }}
+          >
+            {yearMarks.map((m) => (
+              <div
+                key={m.yr}
+                className="absolute bottom-0 top-0 w-px bg-white/10"
+                style={{ left: `${m.pos}%` }}
+              />
             ))}
-          </ul>
+          </div>
+
+          <div className="space-y-2">
+            {experience.map((e, i) => (
+              <motion.div
+                key={e.role + e.org}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ delay: i * 0.05 }}
+                className="group"
+              >
+                <div className="flex items-center gap-4">
+                  {/* label */}
+                  <div className="shrink-0 text-right" style={{ width: "11rem" }}>
+                    <p className="text-sm font-semibold leading-tight">{e.role}</p>
+                    <p className="text-xs text-white/50">{e.org}</p>
+                  </div>
+
+                  {/* track + bar */}
+                  <div className="relative h-9 flex-1">
+                    <button
+                      className="absolute inset-y-0 my-auto flex h-7 items-center overflow-hidden rounded-full bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent-2)] px-3 text-left shadow-[0_0_18px_-6px_var(--color-accent)] outline-none ring-[var(--color-accent)]/60 transition group-hover:ring-2 group-focus-within:ring-2"
+                      style={{
+                        left: `${leftPct(e)}%`,
+                        width: `${widthPct(e)}%`,
+                        minWidth: "3.5rem",
+                      }}
+                      aria-label={`${e.role} at ${e.org}, ${e.period}`}
+                    >
+                      <span className="truncate font-mono text-[11px] font-medium text-white/95">
+                        {e.period}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* detail (expands on hover/focus) */}
+                <div className="grid grid-rows-[0fr] opacity-0 transition-all duration-500 group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
+                  <div className="overflow-hidden">
+                    <div
+                      className="mt-2 rounded-xl border border-white/10 border-l-2 border-l-[var(--color-accent)] bg-[var(--color-surface)] p-4"
+                      style={{ marginLeft: LABEL }}
+                    >
+                      <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[var(--color-accent-2)]">
+                        {e.period}
+                      </p>
+                      <ul className="list-disc space-y-1.5 pl-5 text-sm text-white/75">
+                        {e.points.map((pt, j) => (
+                          <li key={j}>{pt}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
-    </motion.div>
+
+      {/* Mobile: simple stacked list (no hover) */}
+      <div className="space-y-6 md:hidden">
+        {experience.map((e) => (
+          <div
+            key={e.role + e.org}
+            className="border-l-2 border-[var(--color-accent)]/50 pl-4"
+          >
+            <p className="font-mono text-xs uppercase tracking-widest text-[var(--color-accent-2)]">
+              {e.period}
+            </p>
+            <h3 className="mt-1 font-semibold">{e.role}</h3>
+            <p className="text-sm text-white/50">{e.org}</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-white/70">
+              {e.points.map((pt, j) => (
+                <li key={j}>{pt}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </Section>
   );
 }

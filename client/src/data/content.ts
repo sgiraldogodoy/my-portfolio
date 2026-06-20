@@ -276,23 +276,11 @@ export type Experience = {
   start: string; // "YYYY-MM" — used to place/size the timeline bar
   end: string; // "YYYY-MM"
   points: string[];
+  highlight?: boolean;
 };
 
 // Listed most recent first.
 export const experience: Experience[] = [
-  {
-    role: "Software Engineer Intern",
-    org: "Oracle",
-    period: "May 2025 - Aug 2025",
-    start: "2025-05",
-    end: "2025-08",
-    points: [
-      "Boosted an AI agent's response quality with prompt engineering and Retrieval-Augmented Generation, lifting human-like response rates by 50%.",
-      "Rebuilt how data was unified across sources using SQL and Java endpoints, cutting migration from 6 seconds to 0.2 seconds per entry (about 97% faster).",
-      "Wrote Java endpoints for data filtering, error handling, and storage that improved accuracy by 25%.",
-      "Helped ship a beta troubleshooting agent aimed at cutting expert workload and resource use by 60%.",
-    ],
-  },
   {
     role: "Residential Advisor",
     org: "WPI Housing & Residential Services",
@@ -303,30 +291,6 @@ export const experience: Experience[] = [
       "Built a welcoming, inclusive community by running events, mediating conflicts, and supporting residents.",
       "Kept residents safe by responding to crises and documenting incidents during on-call shifts.",
       "Worked with Residential Services staff on programming, move-ins and move-outs, and health and safety checks.",
-    ],
-  },
-  {
-    role: "Lead Instructor",
-    org: "iDTech (Bentley Camp)",
-    period: "Jun 2024 - Jul 2024",
-    start: "2024-06",
-    end: "2024-07",
-    points: [
-      "Taught 80+ students across seven week-long classes how to design, build, program, and pilot VEX V5 battle bots.",
-      "Led a team of 10 instructors, keeping things running smoothly for 800+ campers aged 7 to 17.",
-      "Handled medical situations in the health director's absence, administering medication safely.",
-    ],
-  },
-  {
-    role: "Chief Operating Officer",
-    org: "Universal Education Initiative (UEI)",
-    period: "Sep 2023 - Sep 2024",
-    start: "2023-09",
-    end: "2024-09",
-    points: [
-      "Ran day-to-day operations and kept five teams in sync, which improved overall efficiency.",
-      "Set timelines, roles, and company objectives to align everyone around shared goals.",
-      "Tracked team performance and wrote biweekly reports for the CEO to support decision-making.",
     ],
   },
   {
@@ -353,6 +317,20 @@ export const experience: Experience[] = [
     ],
   },
   {
+    role: "Software Engineer Intern",
+    org: "Oracle",
+    period: "May 2025 - Aug 2025",
+    start: "2025-05",
+    end: "2025-08",
+    points: [
+      "Boosted an AI agent's response quality with prompt engineering and Retrieval-Augmented Generation, lifting human-like response rates by 50%.",
+      "Rebuilt how data was unified across sources using SQL and Java endpoints, cutting migration from 6 seconds to 0.2 seconds per entry (about 97% faster).",
+      "Wrote Java endpoints for data filtering, error handling, and storage that improved accuracy by 25%.",
+      "Helped ship a beta troubleshooting agent aimed at cutting expert workload and resource use by 60%.",
+    ],
+    highlight: true,
+  },
+  {
     role: "AI Project Worker",
     org: "Worcester Polytechnic Institute",
     period: "Jan 2023 - Dec 2024",
@@ -361,6 +339,30 @@ export const experience: Experience[] = [
     points: [
       "Trained machine-vision models on 300+ images a week to sharpen the AI's recognition.",
       "Built AI software that protected confidential information for more than 1,000 fifth-grade students.",
+    ],
+  },
+  {
+    role: "Chief Operating Officer",
+    org: "Universal Education Initiative (UEI)",
+    period: "Sep 2023 - Sep 2024",
+    start: "2023-09",
+    end: "2024-09",
+    points: [
+      "Ran day-to-day operations and kept five teams in sync, which improved overall efficiency.",
+      "Set timelines, roles, and company objectives to align everyone around shared goals.",
+      "Tracked team performance and wrote biweekly reports for the CEO to support decision-making.",
+    ],
+  },
+  {
+    role: "Lead Instructor",
+    org: "iDTech (Bentley Camp)",
+    period: "Jun 2024 - Jul 2024",
+    start: "2024-06",
+    end: "2024-07",
+    points: [
+      "Taught 80+ students across seven week-long classes how to design, build, program, and pilot VEX V5 battle bots.",
+      "Led a team of 10 instructors, keeping things running smoothly for 800+ campers aged 7 to 17.",
+      "Handled medical situations in the health director's absence, administering medication safely.",
     ],
   },
 ];

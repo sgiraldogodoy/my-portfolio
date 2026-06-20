@@ -30,6 +30,7 @@ export const knowledge: string[] = [
   "Experience: Chief Operating Officer at Universal Education Initiative (UEI) (Worcester, Sep 2023 to Sep 2024). Coordinated 5 teams and daily operations, set timelines, roles, and objectives, and produced biweekly performance reports for the CEO.",
   "Experience: Peer Tutor at WPI Academic Resource Center (Aug 2023 to May 2026). Tutored students across 10 courses including calculus and computer science (C++ and Java); about 25% of students returned for additional support.",
   "Experience: Residential Advisor at WPI Housing & Residential Services (Aug 2024 to May 2026). Built an inclusive community through events and mediation, responded to crises, and handled health-and-safety and administrative duties.",
+  "Experience: Peer Learning Assistant in the WPI Physics Department (Aug 2023 to Present). Assisted physics professors in labs by teaching, guiding, explaining concepts, and grading; guided students through labs using LoggerPro, circuit boards, capacitors, and inductors; graded lab reports against a detailed rubric for consistent feedback.",
   "Experience: Lead Instructor at iDTech Bentley Camp (Waltham, Jun 2024 to Jul 2024). Taught 80+ students to build and program VEX V5 battle bots and managed a team of 10 instructors serving 800+ students.",
 
   // --- Projects ---

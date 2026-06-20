@@ -341,6 +341,18 @@ export const experience: Experience[] = [
     ],
   },
   {
+    role: "Peer Learning Assistant",
+    org: "WPI Physics Department",
+    period: "Aug 2023 - Present",
+    start: "2023-08",
+    end: "2026-05",
+    points: [
+      "Assisted physics professors in labs by teaching, guiding, explaining concepts, and grading, which improved student understanding and lab performance.",
+      "Guided students through physics labs using LoggerPro, circuit boards, capacitors, and inductors, strengthening their practical skills and grasp of the concepts.",
+      "Graded lab reports against a detailed rubric to give consistent evaluation and feedback that helped students improve their work.",
+    ],
+  },
+  {
     role: "AI Project Worker",
     org: "Worcester Polytechnic Institute",
     period: "Jan 2023 - Dec 2024",

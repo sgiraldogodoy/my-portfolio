@@ -22,7 +22,16 @@ export default function Projects() {
   return (
     <Section id="projects" title="Projects">
       <div className="grid gap-6 md:grid-cols-2">
-        {projects.map((p, i) => (
+        {projects.map((p, i) => {
+          const expandable = Boolean(
+            p.details ||
+              (p.highlights && p.highlights.length) ||
+              p.image ||
+              p.liveUrl ||
+              p.repoUrl ||
+              p.videoUrl,
+          );
+          return (
           <motion.button
             key={p.title}
             type="button"
@@ -52,11 +61,14 @@ export default function Projects() {
               ))}
             </div>
 
-            <span className="mt-4 text-sm font-medium text-[var(--color-accent-2)] opacity-0 transition group-hover:opacity-100">
-              View details →
-            </span>
+            {expandable && (
+              <span className="mt-4 text-sm font-medium text-[var(--color-accent-2)] transition group-hover:translate-x-0.5">
+                View details →
+              </span>
+            )}
           </motion.button>
-        ))}
+          );
+        })}
       </div>
 
       <ProjectModal project={active} onClose={() => setActive(null)} />

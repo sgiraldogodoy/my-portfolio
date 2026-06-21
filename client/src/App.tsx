@@ -18,8 +18,8 @@ export default function App() {
         <About />
         <TechStack />
         <Projects />
-        <Papers />
         <Experience />
+        <Papers />
         <Contact />
       </main>
       <Footer />

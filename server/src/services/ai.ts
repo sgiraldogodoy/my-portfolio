@@ -1,6 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { env } from "../config/env.js";
-import { retrieve } from "./retrieval.js";
+import { retrieveFromConversation } from "./retrieval.js";
 
 const client = env.anthropicApiKey
   ? new Anthropic({ apiKey: env.anthropicApiKey })
@@ -27,8 +27,7 @@ Rules:
 export async function generateReply(messages: ChatTurn[]): Promise<string> {
   if (!client) throw new Error("AI assistant is not configured.");
 
-  const lastUser = [...messages].reverse().find((m) => m.role === "user");
-  const context = retrieve(lastUser?.content ?? "").join("\n- ");
+  const context = retrieveFromConversation(messages).join("\n- ");
 
   const system = `${SYSTEM_BASE}\n\n<context>\n- ${context}\n</context>`;
 

@@ -8,6 +8,8 @@ const links = [
   { href: "#projects", label: "Projects" },
   { href: "#experience", label: "Experience" },
   { href: "#papers", label: "Papers" },
+  // External: opens my personal photography/hobbies site in a new tab.
+  { href: "https://santiago-giraldo-godoy.onrender.com", label: "Hobbies", external: true },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -27,6 +29,7 @@ export default function Navbar() {
             <a
               key={l.href}
               href={l.href}
+              {...(l.external ? { target: "_blank", rel: "noreferrer" } : {})}
               className="text-sm text-white/70 transition hover:text-white"
             >
               {l.label}
@@ -56,6 +59,7 @@ export default function Navbar() {
             <a
               key={l.href}
               href={l.href}
+              {...(l.external ? { target: "_blank", rel: "noreferrer" } : {})}
               onClick={() => setOpen(false)}
               className="block py-2 text-white/80"
             >

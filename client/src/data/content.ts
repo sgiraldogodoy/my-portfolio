@@ -202,21 +202,6 @@ export const projects: Project[] = [
     liveUrl: "https://www.protectpreservehi.org/satellite-rain-garden-initiative",
     repoUrl: "https://github.com/sgiraldogodoy/pphar",
   },
-  {
-    title: "Personal Website (from scratch)",
-    description:
-      "A hand-built personal site with semantic HTML, a custom palette, and a photography gallery, deployed on Render.",
-    details:
-      "An earlier personal site built without any framework, focused on web fundamentals and a clean deployment workflow.",
-    highlights: [
-      "Semantic HTML and a Flexbox navigation bar for accessible, well-structured markup.",
-      "Custom color palette with CSS variables and a serif and sans-serif type pairing.",
-      "A photography page with a form and a responsive CSS Grid gallery, served by a Node and Express app on Render.",
-    ],
-    tech: ["HTML", "CSS", "JavaScript", "Node.js"],
-    liveUrl: "https://santiago-giraldo-godoy.onrender.com",
-    repoUrl: "https://github.com/sgiraldogodoy/photography",
-  },
 ];
 
 export type Paper = {

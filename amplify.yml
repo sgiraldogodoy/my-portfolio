@@ -1,0 +1,24 @@
+# AWS Amplify Hosting build config for the frontend (the React app in client/).
+# Builds from the repo root using the root lockfile (npm workspaces), then
+# publishes the static output in client/dist.
+#
+# In the Amplify console, set the environment variable:
+#   VITE_API_URL = https://<your-render-backend>.onrender.com
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm install 22
+        - nvm use 22
+        - npm ci
+    build:
+      commands:
+        - npm run build -w client
+  artifacts:
+    baseDirectory: client/dist
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*

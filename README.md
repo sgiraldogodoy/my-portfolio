@@ -62,34 +62,46 @@ the browser. See [`server/src/app.ts`](server/src/app.ts).
 
 ---
 
-## 4. Deploy to AWS (managed & simple)
+## 4. Deploy (free stack: Amplify + Render + Atlas + SES)
 
-**Database — MongoDB Atlas**
-1. Create a free M0 cluster at mongodb.com/atlas.
-2. Add a database user + allow your backend's IP (or 0.0.0.0/0 to start).
-3. Copy the connection string into the backend's `MONGODB_URI`.
+Frontend on **AWS Amplify** (static, CDN), backend on **Render Free**, database on
+**MongoDB Atlas**, contact email via **AWS SES**. Total cost: $0. (Render Free
+sleeps after 15 min idle; the frontend warms it via `/api/health` on page load.)
 
-**Backend — AWS App Runner** (containerized)
-1. Push this repo to GitHub.
-2. App Runner → Create service → from source or from the `server/Dockerfile`.
-3. Set env vars (`MONGODB_URI`, `ANTHROPIC_API_KEY`, `CORS_ORIGIN`=your frontend URL).
-4. Note the service URL (e.g. `https://xxx.awsapprunner.com`).
+Deploy in this order so each piece has the URL it needs:
 
-**Frontend — AWS Amplify Hosting**
-1. Amplify → Host web app → connect the GitHub repo.
-2. Build settings: base directory `client`, build `npm run build`, output `client/dist`.
-3. Add env var `VITE_API_URL` = your App Runner URL.
-4. Update the backend's `CORS_ORIGIN` to the Amplify domain.
+**1. Database — MongoDB Atlas** (already set up for local dev)
+- Reuse your M0 cluster. Under Network Access, allow `0.0.0.0/0` (Render's free
+  outbound IPs aren't fixed). Keep the `MONGODB_URI` handy.
 
-**CI/CD** — both Amplify and App Runner auto-deploy on push to `main`. A
-`.github/workflows/` pipeline for tests/linting is a great next step.
+**2. Backend — Render** (config in `render.yaml`)
+- Render → New → Blueprint → pick this repo. It reads `render.yaml`.
+- Fill the dashboard secrets: `MONGODB_URI`, `ANTHROPIC_API_KEY`, plus the SES
+  vars below. Leave `CORS_ORIGIN` for now (set it after step 4).
+- Deploy, then copy the service URL, e.g. `https://portfolio-api.onrender.com`.
+
+**3. Email — AWS SES**
+- SES → Verified identities → verify your `SES_FROM` email and your `SES_TO`
+  email (sandbox mode can only send to verified addresses — fine here).
+- IAM → create a user with a policy allowing only `ses:SendEmail`; create an
+  access key. Put `AWS_REGION`, `SES_FROM`, `SES_TO`, `AWS_ACCESS_KEY_ID`,
+  `AWS_SECRET_ACCESS_KEY` into Render's env.
+
+**4. Frontend — AWS Amplify** (config in `amplify.yml`)
+- Amplify → Host web app → connect this GitHub repo. It detects `amplify.yml`.
+- Set env var `VITE_API_URL` = your Render URL from step 2.
+- Deploy, then copy the Amplify URL, e.g. `https://main.xxxx.amplifyapp.com`.
+
+**5. Wire CORS**
+- Back in Render, set `CORS_ORIGIN` = your Amplify URL and let it redeploy.
+
+Both Amplify and Render auto-redeploy on push to `main`.
 
 ---
 
 ## 5. Roadmap / next steps
 
-- [ ] Add your real content, resume PDF, and project screenshots
-- [ ] Email notifications on contact (AWS SES) — see TODO in `routes/contact.ts`
+- [x] Email notifications on contact (AWS SES) — see `services/email.ts`
 - [ ] Upgrade AI retrieval to semantic search (Voyage AI embeddings) — see `services/retrieval.ts`
 - [ ] Add a GitHub Actions workflow (lint + typecheck + build)
 - [ ] Custom domain + HTTPS (Route 53 / Amplify domains)

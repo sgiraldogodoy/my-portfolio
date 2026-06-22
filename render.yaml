@@ -1,0 +1,35 @@
+# Render Blueprint for the backend (Express API in server/).
+# In Render: New > Blueprint > pick this repo. It reads this file and creates
+# the service. Secret values (sync: false) are entered in the dashboard, never
+# committed. Render injects PORT automatically; the server already reads it.
+services:
+  - type: web
+    name: portfolio-api
+    runtime: node
+    plan: free # sleeps after 15 min idle; the frontend warms it on page load
+    rootDir: server
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ANTHROPIC_MODEL
+        value: claude-haiku-4-5
+      # --- secrets / per-environment: set these in the Render dashboard ---
+      - key: MONGODB_URI
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: CORS_ORIGIN # your Amplify URL, e.g. https://main.xxxx.amplifyapp.com
+        sync: false
+      - key: AWS_REGION
+        sync: false
+      - key: SES_FROM
+        sync: false
+      - key: SES_TO
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false

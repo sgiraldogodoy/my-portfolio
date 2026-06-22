@@ -2,6 +2,7 @@ import { Router } from "express";
 import { z } from "zod";
 import { Message } from "../models/Message.js";
 import { dbReady } from "../db/connect.js";
+import { sendContactEmail } from "../services/email.js";
 
 export const contactRouter = Router();
 
@@ -22,7 +23,14 @@ contactRouter.post("/", async (req, res, next) => {
       console.log("📨 Contact (not persisted, no DB):", data);
     }
 
-    // TODO: wire up an email notification (e.g. AWS SES) here.
+    // Notify the owner by email (AWS SES). Never let an email failure break the
+    // submission — the message is already saved/logged above.
+    try {
+      await sendContactEmail(data);
+    } catch (err) {
+      console.error("✉️  Contact email failed (submission still recorded):", err);
+    }
+
     res.json({ ok: true });
   } catch (err) {
     next(err);

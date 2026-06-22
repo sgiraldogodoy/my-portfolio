@@ -5,6 +5,7 @@ import rateLimit from "express-rate-limit";
 import { env } from "./config/env.js";
 import { dbReady } from "./db/connect.js";
 import { aiEnabled } from "./services/ai.js";
+import { emailEnabled } from "./services/email.js";
 import { contactRouter } from "./routes/contact.js";
 import { chatRouter } from "./routes/chat.js";
 import { errorHandler, notFound } from "./middleware/error.js";
@@ -35,7 +36,7 @@ export function createApp() {
 
   // --- Routes -----------------------------------------------------------------
   app.get("/api/health", (_req, res) => {
-    res.json({ status: "ok", db: dbReady(), ai: aiEnabled() });
+    res.json({ status: "ok", db: dbReady(), ai: aiEnabled(), email: emailEnabled() });
   });
   app.use("/api/contact", contactRouter);
   app.use("/api/chat", chatRouter);

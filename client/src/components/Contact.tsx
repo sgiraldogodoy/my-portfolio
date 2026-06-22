@@ -3,6 +3,7 @@ import { Mail, Phone, Send } from "lucide-react";
 import Section from "./Section";
 import { profile } from "../data/content";
 import { sendContact } from "../lib/api";
+import { useBackendReady } from "../lib/backendStatus";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -10,6 +11,7 @@ export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  const ready = useBackendReady();
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -83,6 +85,11 @@ export default function Contact() {
             {status === "sending" ? "Sending..." : "Send message"}
           </button>
 
+          {status === "sending" && !ready && (
+            <p className="text-sm text-amber-300/80">
+              Waking the server — this can take up to a minute on the first message.
+            </p>
+          )}
           {status === "sent" && (
             <p className="text-emerald-400">Thanks! I'll be in touch soon.</p>
           )}

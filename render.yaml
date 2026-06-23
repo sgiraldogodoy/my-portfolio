@@ -8,7 +8,10 @@ services:
     runtime: node
     plan: free # sleeps after 15 min idle; the frontend warms it on page load
     rootDir: server
-    buildCommand: npm install && npm run build
+    # --include=dev forces devDependencies (TypeScript + @types) to install even
+    # though Render sets NODE_ENV=production, which otherwise skips them and
+    # breaks the tsc build.
+    buildCommand: npm install --include=dev && npm run build
     startCommand: npm run start
     healthCheckPath: /api/health
     envVars:

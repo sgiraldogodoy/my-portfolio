@@ -32,7 +32,7 @@ export const knowledge: string[] = [
   "Frontend skills: React.js, TypeScript, Tailwind CSS, Shadcn UI, Bootstrap, responsive UI/UX.",
   "Backend & data skills: Node.js, Express, MongoDB, PostgreSQL, JWT auth, REST APIs, tRPC, Prisma ORM, the MERN stack.",
   "AI / Machine Learning skills: PyTorch, deep learning, CNNs, model training, prompt engineering, Retrieval-Augmented Generation (RAG), and AI agents.",
-  "Engineering practices: Agile development, Scrum, object-oriented design, and design patterns. Tools: Git, GitHub, VS Code, WebStorm, IntelliJ, Android Studio, Unix command line.",
+  "Engineering practices: Agile development, Scrum, object-oriented design, and design patterns. Tools: Git, GitHub, VS Code, WebStorm, IntelliJ, Android Studio, Unix command line. Santiago also works fluently with AI pair programming (using Claude) as part of his day-to-day development workflow.",
   "Languages spoken: Spanish (native) and English (bilingual proficiency).",
   "Services offered to freelance clients: secure full-stack web apps, MERN MVPs, API development, AI-powered features, and security/privacy hardening.",
 

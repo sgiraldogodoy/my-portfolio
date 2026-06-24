@@ -25,7 +25,7 @@ export const techStack: TechCategory[] = [
   {
     key: "tools",
     label: "Tools & DevOps",
-    items: ["Git", "GitHub", "Docker", "AWS", "VS Code", "IntelliJ", "MATLAB", "Agile / Scrum"],
+    items: ["Git", "GitHub", "Docker", "AWS", "VS Code", "IntelliJ", "MATLAB", "Agile / Scrum", "AI Pair Programming (Claude)"],
   },
 ];
 

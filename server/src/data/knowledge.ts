@@ -35,6 +35,7 @@ export const knowledge: string[] = [
   "Engineering practices: Agile development, Scrum, object-oriented design, and design patterns. Tools: Git, GitHub, VS Code, WebStorm, IntelliJ, Android Studio, Unix command line. Santiago also works fluently with AI pair programming (using Claude) as part of his day-to-day development workflow.",
   "Languages spoken: Spanish (native) and English (bilingual proficiency).",
   "Services offered to freelance clients: secure full-stack web apps, MERN MVPs, API development, AI-powered features, and security/privacy hardening.",
+  "Cloud & deployment: Santiago deploys to production on AWS, including AWS Amplify for front-end hosting, AWS SES for transactional email, and Route 53 for domains. He has shipped full-stack apps end to end (frontend, API, database, and email), including this very portfolio.",
 
   // --- Experience ---
   "Experience: Software Engineer Intern at Oracle (Redwood Shores, May 2025 to Aug 2025). Improved AI-agent response quality through prompt engineering and RAG, raising human-like response rates by 50%; optimized data unification with SQL and Java endpoints, cutting migration from 6s to 0.2s per entry (about 97% faster); built Java endpoints for data filtration, error handling, and storage, improving accuracy by 25%.",

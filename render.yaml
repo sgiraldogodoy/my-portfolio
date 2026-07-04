@@ -22,6 +22,8 @@ services:
       # --- secrets / per-environment: set these in the Render dashboard ---
       - key: MONGODB_URI
         sync: false
+      - key: JWT_SECRET # any long random string; signs portal login tokens
+        sync: false
       - key: ANTHROPIC_API_KEY
         sync: false
       - key: CORS_ORIGIN # your Amplify URL, e.g. https://main.xxxx.amplifyapp.com

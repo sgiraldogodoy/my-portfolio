@@ -9,6 +9,9 @@ export const env = {
     .map((s) => s.trim())
     .filter(Boolean),
   mongoUri: process.env.MONGODB_URI ?? "",
+  jwtSecret:
+    process.env.JWT_SECRET ??
+    (process.env.NODE_ENV === "production" ? "" : "dev-secret"),
   anthropicApiKey: process.env.ANTHROPIC_API_KEY ?? "",
   anthropicModel: process.env.ANTHROPIC_MODEL ?? "claude-haiku-4-5-20251001",
   // AWS SES (contact-form email notifications)

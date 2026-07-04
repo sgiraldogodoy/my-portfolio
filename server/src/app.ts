@@ -8,6 +8,8 @@ import { aiEnabled } from "./services/ai.js";
 import { emailEnabled } from "./services/email.js";
 import { contactRouter } from "./routes/contact.js";
 import { chatRouter } from "./routes/chat.js";
+import { authRouter } from "./routes/auth.js";
+import { mundialRouter } from "./routes/mundial.js";
 import { errorHandler, notFound } from "./middleware/error.js";
 
 export function createApp() {
@@ -20,15 +22,17 @@ export function createApp() {
     cors({
       origin: env.corsOrigin,
       methods: ["GET", "POST"],
+      allowedHeaders: ["Content-Type", "Authorization"],
     }),
   );
   app.use(express.json({ limit: "32kb" }));
 
-  // Global, generous rate limit; the AI route adds a stricter one of its own.
+  // Global, generous rate limit; the AI and login routes add stricter ones of
+  // their own. Sized so a long sticker-entry session doesn't hit 429s.
   app.use(
     rateLimit({
       windowMs: 15 * 60 * 1000,
-      limit: 300,
+      limit: 1000,
       standardHeaders: true,
       legacyHeaders: false,
     }),
@@ -40,6 +44,8 @@ export function createApp() {
   });
   app.use("/api/contact", contactRouter);
   app.use("/api/chat", chatRouter);
+  app.use("/api/auth", authRouter);
+  app.use("/api/mundial", mundialRouter);
 
   // --- Fallbacks --------------------------------------------------------------
   app.use(notFound);

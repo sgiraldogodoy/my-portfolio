@@ -24,12 +24,13 @@ export default function ChatWidget() {
   const [nudgeDismissed, setNudgeDismissed] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
 
+  // The handlers that open or dismiss the chat reset `nudge` themselves, so
+  // this effect only ever needs to schedule showing it.
   useEffect(() => {
     if (ready && !open && !nudgeDismissed) {
       const t = setTimeout(() => setNudge(true), 1500);
       return () => clearTimeout(t);
     }
-    setNudge(false);
   }, [ready, open, nudgeDismissed]);
 
   function openChat() {

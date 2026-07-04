@@ -2,14 +2,33 @@
 // In production set VITE_API_URL to your deployed backend origin.
 const BASE = import.meta.env.VITE_API_URL ?? "";
 
+export class ApiError extends Error {
+  status: number;
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
+  }
+}
+
+// Portal auth token, attached to every request when set (see lib/auth.tsx).
+let authToken: string | null = null;
+
+export function setAuthToken(token: string | null) {
+  authToken = token;
+}
+
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE}/api${path}`, {
-    headers: { "Content-Type": "application/json" },
     ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+      ...options?.headers,
+    },
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body.error ?? `Request failed (${res.status})`);
+    throw new ApiError(body.error ?? `Request failed (${res.status})`, res.status);
   }
   return res.json() as Promise<T>;
 }
@@ -33,5 +52,29 @@ export function sendChat(messages: ChatMessage[]) {
   return request<{ reply: string }>("/chat", {
     method: "POST",
     body: JSON.stringify({ messages }),
+  });
+}
+
+// --- Portal auth --------------------------------------------------------------
+
+export type PortalUser = { id: string; username: string };
+
+export function login(username: string, password: string) {
+  return request<{ token: string; user: PortalUser }>("/auth/login", {
+    method: "POST",
+    body: JSON.stringify({ username, password }),
+  });
+}
+
+// --- Mundial 2026 sticker tracker ----------------------------------------------
+
+export function getCollection() {
+  return request<{ stickers: Record<string, number> }>("/mundial/collection");
+}
+
+export function updateSticker(code: string, delta: 1 | -1) {
+  return request<{ code: string; count: number }>("/mundial/collection/update", {
+    method: "POST",
+    body: JSON.stringify({ code, delta }),
   });
 }

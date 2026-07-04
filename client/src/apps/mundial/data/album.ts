@@ -30,7 +30,7 @@ export const TEAMS: Team[] = [
   { code: "CIV", name: "Costa de Marfil", group: "E" },
   { code: "ECU", name: "Ecuador", group: "E" },
   { code: "NED", name: "Países Bajos", group: "F" },
-  { code: "JAP", name: "Japón", group: "F" },
+  { code: "JPN", name: "Japón", group: "F" },
   { code: "SWE", name: "Suecia", group: "F" },
   { code: "TUN", name: "Túnez", group: "F" },
   { code: "BEL", name: "Bélgica", group: "G" },

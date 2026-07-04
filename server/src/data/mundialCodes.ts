@@ -9,7 +9,7 @@ export const TEAM_CODES = new Set([
   "BRA", "HAI", "MAR", "SCO", // C
   "AUS", "PAR", "TUR", "USA", // D
   "CUW", "ECU", "GER", "CIV", // E
-  "JAP", "NED", "SWE", "TUN", // F
+  "JPN", "NED", "SWE", "TUN", // F
   "BEL", "EGY", "IRN", "NZL", // G
   "CPV", "KSA", "ESP", "URU", // H
   "FRA", "IRQ", "NOR", "SEN", // I

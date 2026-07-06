@@ -1,5 +1,14 @@
 import { useMemo, useState, type FormEvent } from "react";
-import { ArrowDownCircle, ArrowUpCircle, FileSpreadsheet, Plus, Trash2 } from "lucide-react";
+import {
+  ArrowDownCircle,
+  ArrowUpCircle,
+  Check,
+  FileSpreadsheet,
+  Pencil,
+  Plus,
+  Trash2,
+  X,
+} from "lucide-react";
 import { ACCOUNTS, CATEGORIES, type Account, type Category, type Transaction } from "./data/constants";
 import { exportToExcel } from "./exportExcel";
 import ImportStatement from "./ImportStatement";
@@ -30,6 +39,7 @@ export default function FinanzasApp() {
   const [direction, setDirection] = useState<"out" | "in">("out");
   const [amount, setAmount] = useState("");
   const [exporting, setExporting] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -53,6 +63,11 @@ export default function FinanzasApp() {
 
   function remove(id: string) {
     setTransactions((prev) => prev.filter((tx) => tx.id !== id));
+  }
+
+  function update(id: string, patch: Omit<Transaction, "id">) {
+    setTransactions((prev) => prev.map((tx) => (tx.id === id ? { ...tx, ...patch } : tx)));
+    setEditingId(null);
   }
 
   async function handleExport() {
@@ -257,35 +272,158 @@ export default function FinanzasApp() {
                 </tr>
               </thead>
               <tbody>
-                {transactions.map((tx) => (
-                  <tr key={tx.id} className="border-t border-white/5">
-                    <td className="whitespace-nowrap px-3 py-2 text-white/70">{tx.date}</td>
-                    <td className="px-3 py-2">{tx.description}</td>
-                    <td className="whitespace-nowrap px-3 py-2 text-white/70">{tx.account}</td>
-                    <td className="whitespace-nowrap px-3 py-2 text-white/70">{tx.category}</td>
-                    <td
-                      className={`whitespace-nowrap px-3 py-2 text-right font-medium ${
-                        tx.amount < 0 ? "text-red-300" : "text-emerald-300"
-                      }`}
-                    >
-                      {money.format(tx.amount)}
-                    </td>
-                    <td className="px-2 py-2 text-right">
-                      <button
-                        onClick={() => remove(tx.id)}
-                        title="Eliminar"
-                        className="rounded-md p-1.5 text-white/30 transition hover:bg-red-500/15 hover:text-red-300"
+                {transactions.map((tx) =>
+                  editingId === tx.id ? (
+                    <EditRow
+                      key={tx.id}
+                      tx={tx}
+                      onSave={(patch) => update(tx.id, patch)}
+                      onCancel={() => setEditingId(null)}
+                    />
+                  ) : (
+                    <tr key={tx.id} className="border-t border-white/5">
+                      <td className="whitespace-nowrap px-3 py-2 text-white/70">{tx.date}</td>
+                      <td className="px-3 py-2">{tx.description}</td>
+                      <td className="whitespace-nowrap px-3 py-2 text-white/70">{tx.account}</td>
+                      <td className="whitespace-nowrap px-3 py-2 text-white/70">{tx.category}</td>
+                      <td
+                        className={`whitespace-nowrap px-3 py-2 text-right font-medium ${
+                          tx.amount < 0 ? "text-red-300" : "text-emerald-300"
+                        }`}
                       >
-                        <Trash2 size={14} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                        {money.format(tx.amount)}
+                      </td>
+                      <td className="whitespace-nowrap px-2 py-2 text-right">
+                        <button
+                          onClick={() => setEditingId(tx.id)}
+                          title="Editar"
+                          className="rounded-md p-1.5 text-white/30 transition hover:bg-white/10 hover:text-white"
+                        >
+                          <Pencil size={14} />
+                        </button>
+                        <button
+                          onClick={() => remove(tx.id)}
+                          title="Eliminar"
+                          className="rounded-md p-1.5 text-white/30 transition hover:bg-red-500/15 hover:text-red-300"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </td>
+                    </tr>
+                  ),
+                )}
               </tbody>
             </table>
           </div>
         )}
       </section>
     </main>
+  );
+}
+
+type EditRowProps = {
+  tx: Transaction;
+  onSave: (patch: Omit<Transaction, "id">) => void;
+  onCancel: () => void;
+};
+
+/** Fila del movimiento en modo edición; Guardar aplica, X descarta. */
+function EditRow({ tx, onSave, onCancel }: EditRowProps) {
+  const [date, setDate] = useState(tx.date);
+  const [description, setDescription] = useState(tx.description);
+  const [account, setAccount] = useState<Account>(tx.account);
+  const [category, setCategory] = useState<Category>(tx.category);
+  const [direction, setDirection] = useState<"out" | "in">(tx.amount < 0 ? "out" : "in");
+  const [amount, setAmount] = useState(String(Math.abs(tx.amount)));
+
+  const editClass =
+    "w-full rounded-lg border border-white/10 bg-[var(--color-bg)] px-2 py-1 text-sm outline-none focus:border-[var(--color-accent)]";
+
+  function save() {
+    const value = Number(amount);
+    if (!description.trim() || !date || !Number.isFinite(value) || value <= 0) return;
+    onSave({
+      date,
+      description: description.trim(),
+      account,
+      category,
+      amount: direction === "out" ? -value : value,
+    });
+  }
+
+  return (
+    <tr className="border-t border-white/5 bg-[var(--color-accent)]/5">
+      <td className="px-2 py-1.5">
+        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className={editClass} />
+      </td>
+      <td className="px-2 py-1.5">
+        <input
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className={editClass}
+        />
+      </td>
+      <td className="px-2 py-1.5">
+        <select
+          value={account}
+          onChange={(e) => setAccount(e.target.value as Account)}
+          className={editClass}
+        >
+          {ACCOUNTS.map((a) => (
+            <option key={a}>{a}</option>
+          ))}
+        </select>
+      </td>
+      <td className="px-2 py-1.5">
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value as Category)}
+          className={editClass}
+        >
+          {CATEGORIES.map((c) => (
+            <option key={c}>{c}</option>
+          ))}
+        </select>
+      </td>
+      <td className="px-2 py-1.5">
+        <div className="flex items-center justify-end gap-1">
+          <button
+            onClick={() => setDirection((d) => (d === "out" ? "in" : "out"))}
+            title="Cambiar entrada/salida"
+            className={`rounded-md px-1.5 py-1 transition hover:bg-white/10 ${
+              direction === "out" ? "text-red-300" : "text-emerald-300"
+            }`}
+          >
+            {direction === "out" ? <ArrowDownCircle size={15} /> : <ArrowUpCircle size={15} />}
+          </button>
+          <input
+            type="number"
+            min="0.01"
+            step="0.01"
+            inputMode="decimal"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            className={`${editClass} w-24 text-right`}
+          />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-2 py-1.5 text-right">
+        <button
+          onClick={save}
+          title="Guardar"
+          className="rounded-md p-1.5 text-emerald-300 transition hover:bg-emerald-500/15"
+        >
+          <Check size={14} />
+        </button>
+        <button
+          onClick={onCancel}
+          title="Cancelar"
+          className="rounded-md p-1.5 text-white/40 transition hover:bg-white/10 hover:text-white"
+        >
+          <X size={14} />
+        </button>
+      </td>
+    </tr>
   );
 }

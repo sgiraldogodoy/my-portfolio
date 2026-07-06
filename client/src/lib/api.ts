@@ -78,3 +78,20 @@ export function updateSticker(code: string, delta: 1 | -1) {
     body: JSON.stringify({ code, delta }),
   });
 }
+
+// --- Finanzas (session-only, nothing stored server-side) -----------------------
+
+export type ScannedTransaction = {
+  date: string; // YYYY-MM-DD
+  description: string;
+  amount: number; // positive; direction carries the sign
+  direction: "in" | "out";
+  category: string;
+};
+
+export function scanStatement(pdfBase64: string) {
+  return request<{ transactions: ScannedTransaction[] }>("/finanzas/scan", {
+    method: "POST",
+    body: JSON.stringify({ pdf: pdfBase64 }),
+  });
+}

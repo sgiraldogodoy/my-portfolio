@@ -7,6 +7,7 @@ import { AuthProvider, RequireAuth } from "./lib/auth";
 import AppsLayout from "./apps/AppsLayout";
 import AppsHub from "./apps/AppsHub";
 import MundialApp from "./apps/mundial/MundialApp";
+import FinanzasApp from "./apps/finanzas/FinanzasApp";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
@@ -27,6 +28,7 @@ createRoot(document.getElementById("root")!).render(
           >
             <Route index element={<AppsHub />} />
             <Route path="mundial" element={<MundialApp />} />
+            <Route path="finanzas" element={<FinanzasApp />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

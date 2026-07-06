@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BookOpen } from "lucide-react";
+import { BookOpen, FileSpreadsheet } from "lucide-react";
 
 type AppCard = {
   to: string;
@@ -14,6 +14,12 @@ const APPS: AppCard[] = [
     title: "Álbum Mundial 2026",
     description: "Panini sticker tracker for the 2026 World Cup album.",
     icon: <BookOpen size={22} />,
+  },
+  {
+    to: "/apps/finanzas",
+    title: "Transacciones",
+    description: "Session-only transaction log that exports an organized Excel sheet.",
+    icon: <FileSpreadsheet size={22} />,
   },
   // Future apps get a card here.
 ];

@@ -10,6 +10,7 @@ import { contactRouter } from "./routes/contact.js";
 import { chatRouter } from "./routes/chat.js";
 import { authRouter } from "./routes/auth.js";
 import { mundialRouter } from "./routes/mundial.js";
+import { finanzasRouter } from "./routes/finanzas.js";
 import { errorHandler, notFound } from "./middleware/error.js";
 
 export function createApp() {
@@ -25,6 +26,10 @@ export function createApp() {
       allowedHeaders: ["Content-Type", "Authorization"],
     }),
   );
+  // Mounted before the 32kb JSON cap: statement PDFs need a bigger body limit,
+  // and the router brings its own parser and per-route rate limit.
+  app.use("/api/finanzas", finanzasRouter);
+
   app.use(express.json({ limit: "32kb" }));
 
   // Global, generous rate limit; the AI and login routes add stricter ones of

@@ -5,6 +5,7 @@ import FilterBar, { matchesFilter, type Filter } from "./FilterBar";
 import TeamSection from "./TeamSection";
 import SpecialSection from "./SpecialSection";
 import { useCollection } from "./useCollection";
+import { exportToExcel } from "./exportExcel";
 import {
   COCA_CODES,
   GROUPS,
@@ -96,6 +97,7 @@ export default function MundialApp() {
         onTeam={handleTeam}
         subtractMode={subtractMode}
         onToggleSubtract={() => setSubtractMode((v) => !v)}
+        onExport={() => exportToExcel({ counts, filter, group, teamCode })}
       />
 
       <div className="mt-4 space-y-3">

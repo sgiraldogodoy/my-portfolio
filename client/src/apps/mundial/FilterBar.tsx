@@ -1,3 +1,4 @@
+import { Download } from "lucide-react";
 import { GROUPS, TEAMS } from "./data/album";
 
 export type Filter = "todas" | "faltan" | "tengo" | "repetidas";
@@ -32,6 +33,7 @@ type Props = {
   onTeam: (code: string) => void;
   subtractMode: boolean;
   onToggleSubtract: () => void;
+  onExport: () => void;
 };
 
 const selectClass =
@@ -46,6 +48,7 @@ export default function FilterBar({
   onTeam,
   subtractMode,
   onToggleSubtract,
+  onExport,
 }: Props) {
   // The team dropdown narrows to the selected group.
   const teamOptions = group === "todos" ? TEAMS : TEAMS.filter((t) => t.group === group);
@@ -95,6 +98,14 @@ export default function FilterBar({
             </option>
           ))}
         </select>
+        <button
+          onClick={onExport}
+          title="Exportar lo filtrado a Excel"
+          className="flex shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-[var(--color-surface)] px-3 py-1.5 text-sm text-white/80 transition hover:border-[var(--color-accent)] hover:text-white"
+        >
+          <Download size={14} />
+          Excel
+        </button>
       </div>
       {subtractMode && (
         <p className="pb-1 text-xs text-red-300/80">

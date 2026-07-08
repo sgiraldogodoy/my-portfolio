@@ -73,15 +73,15 @@ function buildRow(
   if (matching.length === 0) return null;
   if (filter === "repetidas") {
     // Trade list: one entry per copy you can give away (one copy stays in the
-    // album), plain numbers so "6 ×3" prints as "6, 6".
+    // album), each listed individually — no ranges — so "6 ×3" prints as "6, 6".
     const giveaway = matching.flatMap((it) =>
-      Array.from({ length: it.count - 1 }, () => ({ ...it, count: 1 })),
+      Array.from({ length: it.count - 1 }, () => it.label),
     );
     return {
       grupo,
       equipo,
       cant: String(giveaway.length),
-      estampas: formatItems(giveaway, false),
+      estampas: giveaway.join(", "),
     };
   }
   return {

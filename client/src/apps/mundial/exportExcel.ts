@@ -47,7 +47,12 @@ function formatItems(items: Item[], annotate: boolean): string {
   return parts.join(", ");
 }
 
-type RowData = { grupo: string; equipo: string; cant: string; estampas: string };
+/**
+ * `estampas` holds one string per sticker column. Every filter uses a single
+ * column except "repetidas", where column k lists stickers with at least k
+ * spare copies (so a sticker owned 3 times appears in columns 1 and 2).
+ */
+type RowData = { grupo: string; equipo: string; cant: string; estampas: string[] };
 
 /** Builds one export row from a section's stickers, or null when the filter leaves it empty. */
 function buildRow(
@@ -66,29 +71,35 @@ function buildRow(
       grupo,
       equipo,
       cant: `${owned.length}/${all.length}`,
-      estampas: pieces.join("   ·   "),
+      estampas: [pieces.join("   ·   ")],
     };
   }
   const matching = all.filter((it) => matchesFilter(it.count, filter));
   if (matching.length === 0) return null;
   if (filter === "repetidas") {
-    // Trade list: one entry per copy you can give away (one copy stays in the
-    // album), each listed individually — no ranges — so "6 ×3" prints as "6, 6".
-    const giveaway = matching.flatMap((it) =>
-      Array.from({ length: it.count - 1 }, () => it.label),
-    );
+    // Trade list: one copy always stays in the album, so a sticker owned n
+    // times has n-1 spares. Spare #1 goes in the first column, spare #2 in the
+    // next, and so on: counts {18: 3} prints as "..., 18 | 18".
+    const tiers: string[][] = [];
+    let total = 0;
+    for (const it of matching) {
+      for (let k = 0; k < it.count - 1; k++) {
+        (tiers[k] ??= []).push(it.label);
+        total += 1;
+      }
+    }
     return {
       grupo,
       equipo,
-      cant: String(giveaway.length),
-      estampas: giveaway.join(", "),
+      cant: String(total),
+      estampas: tiers.map((t) => t.join(", ")),
     };
   }
   return {
     grupo,
     equipo,
     cant: String(matching.length),
-    estampas: formatItems(matching, filter !== "faltan"),
+    estampas: [formatItems(matching, filter !== "faltan")],
   };
 }
 
@@ -126,47 +137,6 @@ export async function buildWorkbook({ counts, filter, group, teamCode }: ExportO
       margins: { left: 0.4, right: 0.4, top: 0.5, bottom: 0.5, header: 0.2, footer: 0.2 },
     },
   });
-  sheet.columns = [
-    { key: "grupo", width: 8 },
-    { key: "equipo", width: 24 },
-    { key: "cant", width: 7 },
-    { key: "estampas", width: 78 },
-  ];
-
-  // --- Title + context ---
-  const filterLabel = FILTERS.find((f) => f.id === filter)?.label ?? filter;
-  const team = TEAMS.find((t) => t.code === teamCode);
-  const scope = [
-    `Filtro: ${filterLabel}`,
-    group !== "todos" ? `Grupo ${group}` : null,
-    team ? team.name : null,
-  ]
-    .filter(Boolean)
-    .join(" · ");
-
-  let owned = 0;
-  let repeats = 0;
-  for (const count of Object.values(counts)) {
-    if (count >= 1) owned += 1;
-    if (count > 1) repeats += count - 1;
-  }
-
-  sheet.mergeCells("A1:D1");
-  const title = sheet.getCell("A1");
-  title.value = "Álbum Mundial 2026";
-  title.font = { bold: true, size: 14 };
-
-  sheet.mergeCells("A2:D2");
-  sheet.getCell("A2").value =
-    `${scope} · Progreso: ${owned}/${TOTAL_STICKERS} · faltan ${TOTAL_STICKERS - owned} · ${repeats} repes · ${new Date().toISOString().slice(0, 10)}`;
-  sheet.getCell("A2").font = { size: 9, color: { argb: "FF666666" } };
-
-  // --- Header ---
-  const header = sheet.addRow(["Grupo", "Equipo", "Cant.", "Estampas"]);
-  header.font = { bold: true, color: { argb: "FFFFFFFF" } };
-  header.eachCell((cell) => {
-    cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: HEADER_FILL } };
-  });
 
   // --- Rows (mirror the on-screen order and visibility) ---
   const rows: RowData[] = [];
@@ -189,10 +159,66 @@ export async function buildWorkbook({ counts, filter, group, teamCode }: ExportO
       if (row) rows.push(row);
     }
   }
+
+  // "Repetidas" grows one sticker column per extra round of spare copies.
+  const stickerCols = Math.max(1, ...rows.map((r) => r.estampas.length));
+  const lastCol = String.fromCharCode(65 + 2 + stickerCols); // D for a single column
+  sheet.columns = [
+    { width: 8 },
+    { width: 24 },
+    { width: 7 },
+    { width: stickerCols > 1 ? 50 : 78 },
+    ...Array.from({ length: stickerCols - 1 }, () => ({ width: 14 })),
+  ];
+
+  // --- Title + context ---
+  const filterLabel = FILTERS.find((f) => f.id === filter)?.label ?? filter;
+  const team = TEAMS.find((t) => t.code === teamCode);
+  const scope = [
+    `Filtro: ${filterLabel}`,
+    group !== "todos" ? `Grupo ${group}` : null,
+    team ? team.name : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
+  let owned = 0;
+  let repeats = 0;
+  for (const count of Object.values(counts)) {
+    if (count >= 1) owned += 1;
+    if (count > 1) repeats += count - 1;
+  }
+
+  sheet.mergeCells(`A1:${lastCol}1`);
+  const title = sheet.getCell("A1");
+  title.value = "Álbum Mundial 2026";
+  title.font = { bold: true, size: 14 };
+
+  sheet.mergeCells(`A2:${lastCol}2`);
+  sheet.getCell("A2").value =
+    `${scope} · Progreso: ${owned}/${TOTAL_STICKERS} · faltan ${TOTAL_STICKERS - owned} · ${repeats} repes · ${new Date().toISOString().slice(0, 10)}`;
+  sheet.getCell("A2").font = { size: 9, color: { argb: "FF666666" } };
+
+  // --- Header ---
+  // Extra "repetidas" columns are headed ×3, ×4… (stickers owned that many times).
+  const header = sheet.addRow([
+    "Grupo",
+    "Equipo",
+    "Cant.",
+    "Estampas",
+    ...Array.from({ length: stickerCols - 1 }, (_, i) => `×${i + 3}`),
+  ]);
+  header.font = { bold: true, color: { argb: "FFFFFFFF" } };
+  header.eachCell((cell) => {
+    cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: HEADER_FILL } };
+  });
+
   for (const data of rows) {
-    const row = sheet.addRow(data);
-    row.getCell("estampas").alignment = { wrapText: true, vertical: "top" };
-    row.getCell("cant").alignment = { horizontal: "center" };
+    const row = sheet.addRow([data.grupo, data.equipo, data.cant, ...data.estampas]);
+    row.getCell(3).alignment = { horizontal: "center" };
+    for (let c = 4; c < 4 + stickerCols; c++) {
+      row.getCell(c).alignment = { wrapText: true, vertical: "top" };
+    }
   }
 
   return wb;

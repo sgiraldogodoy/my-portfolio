@@ -49,8 +49,9 @@ function formatItems(items: Item[], annotate: boolean): string {
 
 /**
  * `estampas` holds one string per sticker column. Every filter uses a single
- * column except "repetidas", where column k lists stickers with at least k
- * spare copies (so a sticker owned 3 times appears in columns 1 and 2).
+ * column except "repetidas", which adds an "Extras" column: the first spare of
+ * each sticker lands in the main column and every further spare in "Extras",
+ * so counts {2:2, 5:3, 7:4} print as "2, 5, 7 | 5, 7, 7".
  */
 type RowData = { grupo: string; equipo: string; cant: string; estampas: string[] };
 
@@ -78,21 +79,21 @@ function buildRow(
   if (matching.length === 0) return null;
   if (filter === "repetidas") {
     // Trade list: one copy always stays in the album, so a sticker owned n
-    // times has n-1 spares. Spare #1 goes in the first column, spare #2 in the
-    // next, and so on: counts {18: 3} prints as "..., 18 | 18".
-    const tiers: string[][] = [];
+    // times has n-1 spares. The first spare of each sticker goes in the main
+    // column and every further spare in "Extras", duplicates included.
+    const first: string[] = [];
+    const extras: string[] = [];
     let total = 0;
     for (const it of matching) {
-      for (let k = 0; k < it.count - 1; k++) {
-        (tiers[k] ??= []).push(it.label);
-        total += 1;
-      }
+      first.push(it.label);
+      for (let k = 0; k < it.count - 2; k++) extras.push(it.label);
+      total += it.count - 1;
     }
     return {
       grupo,
       equipo,
       cant: String(total),
-      estampas: tiers.map((t) => t.join(", ")),
+      estampas: extras.length ? [first.join(", "), extras.join(", ")] : [first.join(", ")],
     };
   }
   return {
@@ -160,7 +161,7 @@ export async function buildWorkbook({ counts, filter, group, teamCode }: ExportO
     }
   }
 
-  // "Repetidas" grows one sticker column per extra round of spare copies.
+  // "Repetidas" adds an "Extras" column when any sticker has 2+ spare copies.
   const stickerCols = Math.max(1, ...rows.map((r) => r.estampas.length));
   const lastCol = String.fromCharCode(65 + 2 + stickerCols); // D for a single column
   sheet.columns = [
@@ -168,7 +169,7 @@ export async function buildWorkbook({ counts, filter, group, teamCode }: ExportO
     { width: 24 },
     { width: 7 },
     { width: stickerCols > 1 ? 50 : 78 },
-    ...Array.from({ length: stickerCols - 1 }, () => ({ width: 14 })),
+    ...Array.from({ length: stickerCols - 1 }, () => ({ width: 28 })),
   ];
 
   // --- Title + context ---
@@ -200,13 +201,12 @@ export async function buildWorkbook({ counts, filter, group, teamCode }: ExportO
   sheet.getCell("A2").font = { size: 9, color: { argb: "FF666666" } };
 
   // --- Header ---
-  // Extra "repetidas" columns are headed ×3, ×4… (stickers owned that many times).
   const header = sheet.addRow([
     "Grupo",
     "Equipo",
     "Cant.",
     "Estampas",
-    ...Array.from({ length: stickerCols - 1 }, (_, i) => `×${i + 3}`),
+    ...(stickerCols > 1 ? ["Extras"] : []),
   ]);
   header.font = { bold: true, color: { argb: "FFFFFFFF" } };
   header.eachCell((cell) => {

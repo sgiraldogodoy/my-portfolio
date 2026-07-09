@@ -8,12 +8,23 @@ type Props = {
   team: Team;
   counts: Counts;
   reserved: Record<string, number>;
+  tradeItems?: Record<string, number>;
+  tradeSide?: "give" | "receive";
   filter: Filter;
   subtractMode: boolean;
   bump: (code: string, delta: 1 | -1) => void;
 };
 
-export default function TeamSection({ team, counts, reserved, filter, subtractMode, bump }: Props) {
+export default function TeamSection({
+  team,
+  counts,
+  reserved,
+  tradeItems,
+  tradeSide,
+  filter,
+  subtractMode,
+  bump,
+}: Props) {
   const keys = Array.from({ length: STICKERS_PER_TEAM }, (_, i) =>
     stickerKey(team.code, i + 1),
   );
@@ -39,6 +50,8 @@ export default function TeamSection({ team, counts, reserved, filter, subtractMo
             label={key.slice(team.code.length)}
             count={counts[key] ?? 0}
             reserved={reserved[key] ?? 0}
+            tradeQty={tradeItems?.[key] ?? 0}
+            tradeSide={tradeSide}
             subtractMode={subtractMode}
             onTap={() => bump(key, subtractMode ? -1 : 1)}
           />

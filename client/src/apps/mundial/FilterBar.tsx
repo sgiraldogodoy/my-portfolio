@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Download } from "lucide-react";
 import { GROUPS, TEAMS } from "./data/album";
 
@@ -34,6 +35,8 @@ type Props = {
   subtractMode: boolean;
   onToggleSubtract: () => void;
   onExport: () => void;
+  /** Extra content pinned at the top of the sticky bar (e.g. trade-mode banner). */
+  banner?: ReactNode;
 };
 
 const selectClass =
@@ -49,12 +52,14 @@ export default function FilterBar({
   subtractMode,
   onToggleSubtract,
   onExport,
+  banner,
 }: Props) {
   // The team dropdown narrows to the selected group.
   const teamOptions = group === "todos" ? TEAMS : TEAMS.filter((t) => t.group === group);
 
   return (
     <div className="sticky top-[57px] z-30 -mx-4 border-b border-white/10 bg-[var(--color-bg)]/95 px-4 py-2 backdrop-blur">
+      {banner}
       <div className="flex items-center gap-2 overflow-x-auto pb-1">
         {FILTERS.map(({ id, label }) => (
           <button

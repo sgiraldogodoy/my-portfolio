@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ApiError,
   authorizeTrade,
@@ -17,6 +17,13 @@ export function useTrades(onCollectionChange: (stickers: Counts) => void) {
   const [trades, setTrades] = useState<Trade[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const tradesRef = useRef<Trade[]>([]);
+  const saveTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+
+  // Mirror of `trades` for the debounced save timers, which outlive a render.
+  useEffect(() => {
+    tradesRef.current = trades;
+  }, [trades]);
 
   const fail = useCallback(
     (err: unknown) => {
@@ -99,5 +106,39 @@ export function useTrades(onCollectionChange: (stickers: Counts) => void) {
     [fail, onCollectionChange],
   );
 
-  return { trades, loading, error, create, save, remove, authorize };
+  /** Optimistic local update (no server call) — pair with saveSoon/flush. */
+  const patchLocal = useCallback(
+    (id: string, patch: Partial<Pick<Trade, "name" | "give" | "receive">>) => {
+      setTrades((prev) => prev.map((t) => (t.id === id ? { ...t, ...patch } : t)));
+    },
+    [],
+  );
+
+  /** Persists the current local state of a trade right away. */
+  const flush = useCallback(
+    async (id: string) => {
+      clearTimeout(saveTimers.current[id]);
+      const t = tradesRef.current.find((t) => t.id === id);
+      if (!t || t.status !== "abierto") return;
+      try {
+        // Don't overwrite local state with the response: newer taps may have
+        // landed while this request was in flight.
+        await updateTrade(id, { name: t.name, give: t.give, receive: t.receive });
+      } catch (err) {
+        fail(err);
+      }
+    },
+    [fail],
+  );
+
+  /** Debounced flush, so a burst of album taps becomes one request. */
+  const saveSoon = useCallback(
+    (id: string) => {
+      clearTimeout(saveTimers.current[id]);
+      saveTimers.current[id] = setTimeout(() => void flush(id), 800);
+    },
+    [flush],
+  );
+
+  return { trades, loading, error, create, save, remove, authorize, patchLocal, saveSoon, flush };
 }

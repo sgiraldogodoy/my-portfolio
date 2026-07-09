@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { ArrowLeftRight, Loader2 } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+import { ArrowLeftRight, Check, Loader2 } from "lucide-react";
 import QuickEntry from "./QuickEntry";
 import FilterBar, { matchesFilter, type Filter } from "./FilterBar";
 import TeamSection from "./TeamSection";
@@ -10,6 +10,7 @@ import { useTrades } from "./useTrades";
 import { exportToExcel } from "./exportExcel";
 import {
   COCA_CODES,
+  displayCode,
   GROUPS,
   SPECIAL_CODES,
   STICKERS_PER_TEAM,
@@ -40,6 +41,49 @@ export default function MundialApp() {
   }, [trades.trades]);
 
   const openTrades = trades.trades.filter((t) => t.status === "abierto").length;
+
+  // Modo cambio: album taps edit the active trade instead of the collection.
+  // The mode is effectively off whenever the trade is gone (deleted/authorized).
+  const [tradeModeState, setTradeMode] = useState<{ id: string; side: "give" | "receive" } | null>(
+    null,
+  );
+  const [tradeNote, setTradeNote] = useState<string | null>(null);
+  const noteTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const activeTrade = tradeModeState
+    ? trades.trades.find((t) => t.id === tradeModeState.id && t.status === "abierto")
+    : undefined;
+  const tradeMode = activeTrade ? tradeModeState : null;
+
+  function showNote(text: string) {
+    if (noteTimer.current) clearTimeout(noteTimer.current);
+    setTradeNote(text);
+    noteTimer.current = setTimeout(() => setTradeNote(null), 2500);
+  }
+
+  function tradeTap(code: string, delta: 1 | -1) {
+    if (!tradeMode || !activeTrade) return;
+    const side = tradeMode.side;
+    const map = { ...activeTrade[side] };
+    const next = (map[code] ?? 0) + delta;
+    if (next < 0) return;
+    if (side === "give" && delta > 0) {
+      const spares = Math.max(0, (counts[code] ?? 0) - 1);
+      const others = (reserved[code] ?? 0) - (activeTrade.give[code] ?? 0);
+      if (next > spares - others) {
+        showNote(`No hay repes libres de ${displayCode(code)}`);
+        return;
+      }
+    }
+    if (next === 0) delete map[code];
+    else map[code] = next;
+    trades.patchLocal(activeTrade.id, { [side]: map });
+    trades.saveSoon(activeTrade.id);
+  }
+
+  async function exitTradeMode() {
+    if (activeTrade) await trades.flush(activeTrade.id);
+    setTradeMode(null);
+  }
 
   function handleGroup(g: string) {
     setGroup(g);
@@ -125,11 +169,21 @@ export default function MundialApp() {
         <p className="mt-3 rounded-lg bg-red-500/15 px-4 py-2 text-sm text-red-300">{error}</p>
       )}
 
-      {view === "cambios" && <TradesPanel api={trades} counts={counts} reserved={reserved} />}
+      {view === "cambios" && (
+        <TradesPanel
+          api={trades}
+          counts={counts}
+          reserved={reserved}
+          onEnterAlbum={(tradeId) => {
+            setTradeMode({ id: tradeId, side: "give" });
+            setView("album");
+          }}
+        />
+      )}
 
       {view === "album" && (
         <>
-      <QuickEntry counts={counts} bump={bump} />
+      {!tradeMode && <QuickEntry counts={counts} bump={bump} />}
 
       <FilterBar
         filter={filter}
@@ -141,6 +195,53 @@ export default function MundialApp() {
         subtractMode={subtractMode}
         onToggleSubtract={() => setSubtractMode((v) => !v)}
         onExport={() => exportToExcel({ counts, filter, group, teamCode })}
+        banner={
+          tradeMode && activeTrade ? (
+            <div className="pb-2 pt-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="min-w-0 truncate text-sm font-semibold text-amber-300">
+                  Cambio: {activeTrade.name}
+                </span>
+                <span className="flex overflow-hidden rounded-full border border-white/10">
+                  <button
+                    onClick={() => setTradeMode({ ...tradeMode, side: "give" })}
+                    className={`px-3 py-1 text-xs font-semibold transition ${
+                      tradeMode.side === "give"
+                        ? "bg-amber-500 text-black"
+                        : "bg-white/5 text-white/60"
+                    }`}
+                  >
+                    Doy
+                  </button>
+                  <button
+                    onClick={() => setTradeMode({ ...tradeMode, side: "receive" })}
+                    className={`px-3 py-1 text-xs font-semibold transition ${
+                      tradeMode.side === "receive"
+                        ? "bg-emerald-500 text-black"
+                        : "bg-white/5 text-white/60"
+                    }`}
+                  >
+                    Recibo
+                  </button>
+                </span>
+                <span className="text-xs text-white/50">
+                  doy {Object.values(activeTrade.give).reduce((a, b) => a + b, 0)} · recibo{" "}
+                  {Object.values(activeTrade.receive).reduce((a, b) => a + b, 0)}
+                </span>
+                <button
+                  onClick={() => void exitTradeMode()}
+                  className="ml-auto flex items-center gap-1 rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white transition hover:opacity-90"
+                >
+                  <Check size={12} />
+                  Listo
+                </button>
+              </div>
+              <p className={`mt-1 text-xs ${tradeNote ? "text-red-300" : "text-white/40"}`}>
+                {tradeNote ?? "Toca una estampa para apartarla · Modo restar la quita"}
+              </p>
+            </div>
+          ) : undefined
+        }
       />
 
       <div className="mt-4 space-y-3">
@@ -152,18 +253,22 @@ export default function MundialApp() {
               codes={SPECIAL_CODES}
               counts={counts}
               reserved={reserved}
+              tradeItems={activeTrade?.[tradeMode?.side ?? "give"]}
+              tradeSide={tradeMode?.side}
               filter={filter}
               subtractMode={subtractMode}
-              bump={bump}
+              bump={tradeMode ? tradeTap : bump}
             />
             <SpecialSection
               title="Coca-Cola"
               codes={COCA_CODES}
               counts={counts}
               reserved={reserved}
+              tradeItems={activeTrade?.[tradeMode?.side ?? "give"]}
+              tradeSide={tradeMode?.side}
               filter={filter}
               subtractMode={subtractMode}
-              bump={bump}
+              bump={tradeMode ? tradeTap : bump}
             />
           </>
         )}
@@ -192,9 +297,11 @@ export default function MundialApp() {
                     team={team}
                     counts={counts}
                     reserved={reserved}
+                    tradeItems={activeTrade?.[tradeMode?.side ?? "give"]}
+                    tradeSide={tradeMode?.side}
                     filter={filter}
                     subtractMode={subtractMode}
-                    bump={bump}
+                    bump={tradeMode ? tradeTap : bump}
                   />
                 ))}
               </div>

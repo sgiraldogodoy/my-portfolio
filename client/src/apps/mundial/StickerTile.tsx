@@ -5,6 +5,9 @@ type Props = {
   count: number;
   /** Copies promised in open trades ("apartadas"). */
   reserved?: number;
+  /** Copies of this sticker in the ACTIVE trade side while in modo cambio. */
+  tradeQty?: number;
+  tradeSide?: "give" | "receive";
   subtractMode: boolean;
   onTap: () => void;
 };
@@ -14,7 +17,15 @@ type Props = {
  * ámbar = tiene copias apartadas en un cambio (candado con cuántas).
  * Min height keeps tap targets phone-friendly (~44px).
  */
-export default function StickerTile({ label, count, reserved = 0, subtractMode, onTap }: Props) {
+export default function StickerTile({
+  label,
+  count,
+  reserved = 0,
+  tradeQty = 0,
+  tradeSide,
+  subtractMode,
+  onTap,
+}: Props) {
   const base =
     "relative flex min-h-11 select-none items-center justify-center rounded-lg text-sm font-medium transition active:scale-95";
   const look =
@@ -42,6 +53,16 @@ export default function StickerTile({ label, count, reserved = 0, subtractMode, 
         <span className="absolute -left-1 -top-1 flex items-center gap-0.5 rounded-full bg-amber-300 px-1.5 text-[10px] font-bold text-black shadow">
           <Lock size={9} />
           ×{reserved}
+        </span>
+      )}
+      {tradeQty > 0 && (
+        <span
+          className={`absolute -bottom-1 -right-1 rounded-full px-1.5 text-[10px] font-bold text-black shadow ${
+            tradeSide === "receive" ? "bg-emerald-400" : "bg-amber-400"
+          }`}
+        >
+          {tradeSide === "receive" ? "+" : "−"}
+          {tradeQty}
         </span>
       )}
     </button>

@@ -9,6 +9,8 @@ type Props = {
   codes: string[];
   counts: Counts;
   reserved: Record<string, number>;
+  tradeItems?: Record<string, number>;
+  tradeSide?: "give" | "receive";
   filter: Filter;
   subtractMode: boolean;
   bump: (code: string, delta: 1 | -1) => void;
@@ -20,6 +22,8 @@ export default function SpecialSection({
   codes,
   counts,
   reserved,
+  tradeItems,
+  tradeSide,
   filter,
   subtractMode,
   bump,
@@ -44,6 +48,8 @@ export default function SpecialSection({
             label={displayCode(code)}
             count={counts[code] ?? 0}
             reserved={reserved[code] ?? 0}
+            tradeQty={tradeItems?.[code] ?? 0}
+            tradeSide={tradeSide}
             subtractMode={subtractMode}
             onTap={() => bump(code, subtractMode ? -1 : 1)}
           />

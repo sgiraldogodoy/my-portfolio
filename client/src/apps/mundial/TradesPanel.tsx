@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { Check, ChevronDown, Minus, Plus, Trash2 } from "lucide-react";
+import { Check, ChevronDown, Hand, Minus, Plus, Trash2 } from "lucide-react";
 import { parseCode } from "./parseCode";
 import { displayCode } from "./data/album";
 import type { Trade } from "../../lib/api";
@@ -13,10 +13,13 @@ type Props = {
   counts: Counts;
   /** Total copies reserved per code across all OPEN trades (saved state). */
   reserved: Record<string, number>;
+  /** Switches to the album in "modo cambio" for this trade. */
+  onEnterAlbum: (tradeId: string) => void;
 };
 
-export default function TradesPanel({ api, counts, reserved }: Props) {
+export default function TradesPanel({ api, counts, reserved, onEnterAlbum }: Props) {
   const [newName, setNewName] = useState("");
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   async function handleCreate(e: FormEvent) {
     e.preventDefault();
@@ -62,7 +65,16 @@ export default function TradesPanel({ api, counts, reserved }: Props) {
       ) : (
         <div className="mt-4 space-y-3">
           {open.map((trade) => (
-            <TradeCard key={trade.id} trade={trade} api={api} counts={counts} reserved={reserved} />
+            <TradeCard
+              key={`${trade.id}:${JSON.stringify(trade.give)}:${JSON.stringify(trade.receive)}`}
+              trade={trade}
+              api={api}
+              counts={counts}
+              reserved={reserved}
+              expanded={expandedId === trade.id}
+              onToggle={() => setExpandedId((v) => (v === trade.id ? null : trade.id))}
+              onEnterAlbum={onEnterAlbum}
+            />
           ))}
           {done.length > 0 && (
             <>
@@ -70,7 +82,16 @@ export default function TradesPanel({ api, counts, reserved }: Props) {
                 Completados
               </h2>
               {done.map((trade) => (
-                <TradeCard key={trade.id} trade={trade} api={api} counts={counts} reserved={reserved} />
+                <TradeCard
+                  key={trade.id}
+                  trade={trade}
+                  api={api}
+                  counts={counts}
+                  reserved={reserved}
+                  expanded={expandedId === trade.id}
+                  onToggle={() => setExpandedId((v) => (v === trade.id ? null : trade.id))}
+                  onEnterAlbum={onEnterAlbum}
+                />
               ))}
             </>
           )}
@@ -85,13 +106,18 @@ function TradeCard({
   api,
   counts,
   reserved,
+  expanded,
+  onToggle,
+  onEnterAlbum,
 }: {
   trade: Trade;
   api: TradesApi;
   counts: Counts;
   reserved: Record<string, number>;
+  expanded: boolean;
+  onToggle: () => void;
+  onEnterAlbum: (tradeId: string) => void;
 }) {
-  const [expanded, setExpanded] = useState(false);
   const [name, setName] = useState(trade.name);
   const [give, setGive] = useState<Record<string, number>>(trade.give);
   const [receive, setReceive] = useState<Record<string, number>>(trade.receive);
@@ -141,7 +167,7 @@ function TradeCard({
       }`}
     >
       <button
-        onClick={() => setExpanded((v) => !v)}
+        onClick={onToggle}
         className="flex w-full items-center justify-between px-4 py-3 text-left"
       >
         <span className="min-w-0">
@@ -194,6 +220,13 @@ function TradeCard({
                   className="rounded-lg bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-40"
                 >
                   {saving ? "Guardando…" : dirty ? "Guardar" : "Guardado"}
+                </button>
+                <button
+                  onClick={() => onEnterAlbum(trade.id)}
+                  className="flex items-center gap-1 rounded-lg border border-amber-400/40 px-4 py-2 text-sm font-semibold text-amber-300 transition hover:bg-amber-400/10"
+                >
+                  <Hand size={14} />
+                  Apartar en álbum
                 </button>
                 <button
                   onClick={handleAuthorize}

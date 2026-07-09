@@ -79,6 +79,47 @@ export function updateSticker(code: string, delta: 1 | -1) {
   });
 }
 
+export type Trade = {
+  id: string;
+  name: string;
+  status: "abierto" | "completado";
+  give: Record<string, number>;
+  receive: Record<string, number>;
+  updatedAt: string;
+};
+
+export function getTrades() {
+  return request<{ trades: Trade[] }>("/mundial/trades");
+}
+
+export function createTrade(name: string) {
+  return request<{ trade: Trade }>("/mundial/trades", {
+    method: "POST",
+    body: JSON.stringify({ name }),
+  });
+}
+
+export function updateTrade(
+  id: string,
+  patch: Partial<Pick<Trade, "name" | "give" | "receive">>,
+) {
+  return request<{ trade: Trade }>(`/mundial/trades/${id}`, {
+    method: "POST",
+    body: JSON.stringify(patch),
+  });
+}
+
+export function deleteTrade(id: string) {
+  return request<{ ok: true }>(`/mundial/trades/${id}/delete`, { method: "POST" });
+}
+
+export function authorizeTrade(id: string) {
+  return request<{ trade: Trade; stickers: Record<string, number> }>(
+    `/mundial/trades/${id}/authorize`,
+    { method: "POST" },
+  );
+}
+
 // --- Finanzas (session-only, nothing stored server-side) -----------------------
 
 export type ScannedTransaction = {

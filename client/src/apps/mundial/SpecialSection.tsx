@@ -8,13 +8,22 @@ type Props = {
   title: string;
   codes: string[];
   counts: Counts;
+  reserved: Record<string, number>;
   filter: Filter;
   subtractMode: boolean;
   bump: (code: string, delta: 1 | -1) => void;
 };
 
 /** Sección de estampas especiales (FIFA / Coca-Cola). */
-export default function SpecialSection({ title, codes, counts, filter, subtractMode, bump }: Props) {
+export default function SpecialSection({
+  title,
+  codes,
+  counts,
+  reserved,
+  filter,
+  subtractMode,
+  bump,
+}: Props) {
   const owned = codes.filter((c) => (counts[c] ?? 0) >= 1).length;
   const visible = codes.filter((c) => matchesFilter(counts[c] ?? 0, filter));
   if (visible.length === 0) return null;
@@ -34,6 +43,7 @@ export default function SpecialSection({ title, codes, counts, filter, subtractM
             key={code}
             label={displayCode(code)}
             count={counts[code] ?? 0}
+            reserved={reserved[code] ?? 0}
             subtractMode={subtractMode}
             onTap={() => bump(code, subtractMode ? -1 : 1)}
           />

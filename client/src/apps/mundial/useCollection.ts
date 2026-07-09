@@ -73,5 +73,10 @@ export function useCollection() {
     [logout],
   );
 
-  return { counts, loading, error, bump };
+  /** Replaces all counts at once (e.g. after authorizing a trade). */
+  const replace = useCallback((stickers: Counts) => {
+    setCounts(stickers);
+  }, []);
+
+  return { counts, loading, error, bump, replace };
 }

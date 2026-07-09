@@ -1,10 +1,12 @@
 import { useMemo, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { ArrowLeftRight, Loader2 } from "lucide-react";
 import QuickEntry from "./QuickEntry";
 import FilterBar, { matchesFilter, type Filter } from "./FilterBar";
 import TeamSection from "./TeamSection";
 import SpecialSection from "./SpecialSection";
+import TradesPanel from "./TradesPanel";
 import { useCollection } from "./useCollection";
+import { useTrades } from "./useTrades";
 import { exportToExcel } from "./exportExcel";
 import {
   COCA_CODES,
@@ -17,11 +19,27 @@ import {
 } from "./data/album";
 
 export default function MundialApp() {
-  const { counts, loading, error, bump } = useCollection();
+  const { counts, loading, error, bump, replace } = useCollection();
+  const trades = useTrades(replace);
+  const [view, setView] = useState<"album" | "cambios">("album");
   const [filter, setFilter] = useState<Filter>("todas");
   const [group, setGroup] = useState("todos");
   const [teamCode, setTeamCode] = useState("todos");
   const [subtractMode, setSubtractMode] = useState(false);
+
+  // Copies promised across all open trades, per sticker code ("apartadas").
+  const reserved = useMemo(() => {
+    const map: Record<string, number> = {};
+    for (const trade of trades.trades) {
+      if (trade.status !== "abierto") continue;
+      for (const [code, qty] of Object.entries(trade.give)) {
+        map[code] = (map[code] ?? 0) + qty;
+      }
+    }
+    return map;
+  }, [trades.trades]);
+
+  const openTrades = trades.trades.filter((t) => t.status === "abierto").length;
 
   function handleGroup(g: string) {
     setGroup(g);
@@ -82,11 +100,36 @@ export default function MundialApp() {
         </div>
       </div>
 
-      <QuickEntry counts={counts} bump={bump} />
+      {/* Vista: álbum o cambios */}
+      <div className="mt-4 flex gap-2">
+        <button
+          onClick={() => setView("album")}
+          className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
+            view === "album" ? "bg-[var(--color-accent)] text-white" : "bg-white/5 text-white/60 hover:bg-white/10"
+          }`}
+        >
+          Álbum
+        </button>
+        <button
+          onClick={() => setView("cambios")}
+          className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium transition ${
+            view === "cambios" ? "bg-amber-500 text-black" : "bg-white/5 text-white/60 hover:bg-white/10"
+          }`}
+        >
+          <ArrowLeftRight size={14} />
+          Cambios{openTrades > 0 ? ` (${openTrades})` : ""}
+        </button>
+      </div>
 
       {error && (
-        <p className="mb-2 rounded-lg bg-red-500/15 px-4 py-2 text-sm text-red-300">{error}</p>
+        <p className="mt-3 rounded-lg bg-red-500/15 px-4 py-2 text-sm text-red-300">{error}</p>
       )}
+
+      {view === "cambios" && <TradesPanel api={trades} counts={counts} reserved={reserved} />}
+
+      {view === "album" && (
+        <>
+      <QuickEntry counts={counts} bump={bump} />
 
       <FilterBar
         filter={filter}
@@ -108,6 +151,7 @@ export default function MundialApp() {
               title="Especiales FIFA"
               codes={SPECIAL_CODES}
               counts={counts}
+              reserved={reserved}
               filter={filter}
               subtractMode={subtractMode}
               bump={bump}
@@ -116,6 +160,7 @@ export default function MundialApp() {
               title="Coca-Cola"
               codes={COCA_CODES}
               counts={counts}
+              reserved={reserved}
               filter={filter}
               subtractMode={subtractMode}
               bump={bump}
@@ -146,6 +191,7 @@ export default function MundialApp() {
                     key={team.code}
                     team={team}
                     counts={counts}
+                    reserved={reserved}
                     filter={filter}
                     subtractMode={subtractMode}
                     bump={bump}
@@ -156,6 +202,8 @@ export default function MundialApp() {
           );
         })}
       </div>
+        </>
+      )}
     </main>
   );
 }

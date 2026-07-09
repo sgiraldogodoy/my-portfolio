@@ -7,12 +7,13 @@ import type { Counts } from "./useCollection";
 type Props = {
   team: Team;
   counts: Counts;
+  reserved: Record<string, number>;
   filter: Filter;
   subtractMode: boolean;
   bump: (code: string, delta: 1 | -1) => void;
 };
 
-export default function TeamSection({ team, counts, filter, subtractMode, bump }: Props) {
+export default function TeamSection({ team, counts, reserved, filter, subtractMode, bump }: Props) {
   const keys = Array.from({ length: STICKERS_PER_TEAM }, (_, i) =>
     stickerKey(team.code, i + 1),
   );
@@ -37,6 +38,7 @@ export default function TeamSection({ team, counts, filter, subtractMode, bump }
             key={key}
             label={key.slice(team.code.length)}
             count={counts[key] ?? 0}
+            reserved={reserved[key] ?? 0}
             subtractMode={subtractMode}
             onTap={() => bump(key, subtractMode ? -1 : 1)}
           />

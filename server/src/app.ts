@@ -11,6 +11,7 @@ import { chatRouter } from "./routes/chat.js";
 import { authRouter } from "./routes/auth.js";
 import { mundialRouter } from "./routes/mundial.js";
 import { finanzasRouter } from "./routes/finanzas.js";
+import { dndRouter } from "./routes/dnd.js";
 import { errorHandler, notFound } from "./middleware/error.js";
 
 export function createApp() {
@@ -51,6 +52,7 @@ export function createApp() {
   app.use("/api/chat", chatRouter);
   app.use("/api/auth", authRouter);
   app.use("/api/mundial", mundialRouter);
+  app.use("/api/dnd", dndRouter);
 
   // --- Fallbacks --------------------------------------------------------------
   app.use(notFound);

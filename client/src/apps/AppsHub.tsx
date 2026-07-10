@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BookOpen, FileSpreadsheet } from "lucide-react";
+import { BookOpen, FileSpreadsheet, Dices } from "lucide-react";
 
 type AppCard = {
   to: string;
@@ -20,6 +20,12 @@ const APPS: AppCard[] = [
     title: "Transacciones",
     description: "Session-only transaction log that exports an organized Excel sheet.",
     icon: <FileSpreadsheet size={22} />,
+  },
+  {
+    to: "/apps/dnd",
+    title: "D&D Character Creator",
+    description: "Build and store D&D 5e characters with a step-by-step wizard.",
+    icon: <Dices size={22} />,
   },
   // Future apps get a card here.
 ];

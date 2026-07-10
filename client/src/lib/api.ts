@@ -120,6 +120,37 @@ export function authorizeTrade(id: string) {
   );
 }
 
+// --- D&D character builder ------------------------------------------------------
+
+// Kept loose here; the real shape lives in apps/dnd/types.ts.
+export type DndCharacter<TBuild = unknown> = {
+  id: string;
+  build: TBuild;
+  updatedAt: string;
+};
+
+export function getDndCharacters<T>() {
+  return request<{ characters: DndCharacter<T>[] }>("/dnd/characters");
+}
+
+export function createDndCharacter<T>(build: T) {
+  return request<{ character: DndCharacter<T> }>("/dnd/characters", {
+    method: "POST",
+    body: JSON.stringify({ build }),
+  });
+}
+
+export function updateDndCharacter<T>(id: string, build: T) {
+  return request<{ character: DndCharacter<T> }>(`/dnd/characters/${id}`, {
+    method: "POST",
+    body: JSON.stringify({ build }),
+  });
+}
+
+export function deleteDndCharacter(id: string) {
+  return request<{ ok: true }>(`/dnd/characters/${id}/delete`, { method: "POST" });
+}
+
 // --- Finanzas (session-only, nothing stored server-side) -----------------------
 
 export type ScannedTransaction = {

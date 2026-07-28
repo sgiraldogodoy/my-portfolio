@@ -8,11 +8,10 @@ export const profile = {
   name: "Santiago Giraldo Godoy",
   role: "Secure Full-Stack & Web Developer",
   tagline:
-    "I build secure, AI-powered web apps from start to finish, from polished React frontends to solid Node and cloud backends.",
+    "I build full-stack web apps with React, Node, and MongoDB, usually with some AI in the mix and always with security in mind.",
   location: "Worcester, MA, USA",
   email: "sgiraldog@gmail.com",
   phone: "+1 (774) 253-0905",
-  available: true, // shows an "available for work" badge
   socials: {
     github: "https://github.com/sgiraldogodoy",
     linkedin: "https://www.linkedin.com/in/santiagogiraldog",
@@ -31,40 +30,22 @@ export const about = {
   ],
 };
 
-export type Skill = { name: string; level: number /* 0-100 */ };
-
-export const skills: { category: string; items: Skill[] }[] = [
+export const skills: { category: string; items: string[] }[] = [
   {
     category: "Frontend",
-    items: [
-      { name: "React.js / TypeScript", level: 90 },
-      { name: "Tailwind & Shadcn UI", level: 85 },
-      { name: "Responsive UI / UX", level: 80 },
-    ],
+    items: ["React.js / TypeScript", "Tailwind & Shadcn UI", "Responsive UI / UX"],
   },
   {
     category: "Backend & Data",
-    items: [
-      { name: "Node.js / Express", level: 88 },
-      { name: "MongoDB & PostgreSQL", level: 82 },
-      { name: "REST / tRPC APIs", level: 80 },
-    ],
+    items: ["Node.js / Express", "MongoDB & PostgreSQL", "REST / tRPC APIs"],
   },
   {
     category: "AI / Machine Learning",
-    items: [
-      { name: "RAG & AI Agents", level: 85 },
-      { name: "Prompt Engineering", level: 85 },
-      { name: "PyTorch / CNNs", level: 78 },
-    ],
+    items: ["RAG & AI Agents", "Prompt Engineering", "PyTorch / CNNs"],
   },
   {
     category: "Security & Practices",
-    items: [
-      { name: "Secure Auth & JWT", level: 80 },
-      { name: "Data Privacy & Access Control", level: 78 },
-      { name: "Agile, OOD, Design Patterns", level: 85 },
-    ],
+    items: ["Secure Auth & JWT", "Data Privacy & Access Control", "Agile, OOD, Design Patterns"],
   },
 ];
 

@@ -8,7 +8,7 @@ import { useBackendReady } from "../lib/backendStatus";
 const FIRST = profile.name.split(" ")[0];
 const greeting = (): ChatMessage => ({
   role: "assistant",
-  content: `Hi! I'm ${FIRST}'s AI assistant. Ask me anything about their experience, skills, or projects.`,
+  content: `Hi, I'm an AI assistant that knows ${FIRST}'s work. Feel free to ask about projects, experience, or anything on this site.`,
 });
 
 export default function ChatWidget() {
@@ -90,7 +90,7 @@ export default function ChatWidget() {
               className="block text-left"
               aria-label="Open the AI assistant"
             >
-              👋 Curious about {FIRST}? Ask me anything!
+              Questions about {FIRST}? You can ask here.
             </button>
             <button
               onClick={() => {

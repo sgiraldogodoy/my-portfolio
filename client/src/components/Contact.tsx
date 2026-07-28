@@ -32,8 +32,8 @@ export default function Contact() {
       <div className="grid gap-10 md:grid-cols-2">
         <div>
           <p className="text-lg text-white/75">
-            Have a project in mind, or just want to say hi? Drop me a message and
-            I'll get back to you.
+            You can reach me through the form or directly by email. I usually
+            reply within a day.
           </p>
           <div className="mt-6 space-y-3">
             <a

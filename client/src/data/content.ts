@@ -15,6 +15,7 @@ export const profile = {
   socials: {
     github: "https://github.com/sgiraldogodoy",
     linkedin: "https://www.linkedin.com/in/santiagogiraldog",
+    instagram: "https://www.instagram.com/giraldog18",
     twitter: "",
   },
   // Path to your resume in client/public. Drop your PDF there.

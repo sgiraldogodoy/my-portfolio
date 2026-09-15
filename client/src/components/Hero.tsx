@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Download, Github, Linkedin } from "lucide-react";
+import { Download, Github, Instagram, Linkedin } from "lucide-react";
 import { profile } from "../data/content";
 
 export default function Hero() {
@@ -55,6 +55,11 @@ export default function Hero() {
             {profile.socials.linkedin && (
               <a href={profile.socials.linkedin} aria-label="LinkedIn" className="hover:text-white">
                 <Linkedin />
+              </a>
+            )}
+            {profile.socials.instagram && (
+              <a href={profile.socials.instagram} aria-label="Instagram" className="hover:text-white">
+                <Instagram />
               </a>
             )}
           </div>

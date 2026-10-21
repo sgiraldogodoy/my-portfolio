@@ -2,10 +2,7 @@ export const ACCOUNTS = [
   "Efectivo",
   "Savings",
   "Checking",
-  "Lavandería",
-  "Goatbucks",
-  "BonusPoints",
-  "Starbucks",
+  "Venmo",
   "Viajes",
   "T. Cred",
 ] as const;
@@ -15,7 +12,7 @@ export const CATEGORIES = [
   "Vivienda",
   "Alimentación",
   "Salud",
-  "Teléfono",
+  "Teléfono y Internet",
   "Lavandería y Aseo",
   "Paseos",
   "Break",
@@ -28,6 +25,7 @@ export const CATEGORIES = [
   "Movimientos",
   "Depósitos",
   "Salario",
+  "Transporte",
 ] as const;
 
 export type Account = (typeof ACCOUNTS)[number];

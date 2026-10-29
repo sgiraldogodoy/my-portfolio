@@ -8,13 +8,14 @@
 export const knowledge: string[] = [
   // --- Identity & contact ---
   "Name: Santiago Giraldo Godoy. Role: Secure Full-Stack & Web Developer, available for freelance work.",
-  "Location: Worcester, Massachusetts, USA. Contact email: sgiraldog@gmail.com. Phone: +1 (774) 253-0905. LinkedIn: linkedin.com/in/santiagogiraldog. GitHub: github.com/sgiraldog18.",
-  "Summary: Computer Science graduate specializing in secure full-stack web development across the MERN stack (MongoDB, Express, React, Node) with TypeScript, plus strong AI/ML experience (RAG, AI agents, deep learning).",
+  "Location: Seattle, Washington, USA (moved from Worcester, MA for graduate school). Contact email: sgiraldog@gmail.com. Phone: +1 (774) 253-0905. LinkedIn: linkedin.com/in/santiagogiraldog. GitHub: github.com/sgiraldog18.",
+  "Summary: Computer Science graduate (WPI) and current Master's student in Artificial Intelligence at Northeastern University, specializing in secure full-stack web development across the MERN stack (MongoDB, Express, React, Node) with TypeScript, plus strong AI/ML experience (RAG, AI agents, deep learning).",
 
   // --- Education ---
-  "Education: Bachelor of Science in Computer Science with a minor in Robotics Engineering from Worcester Polytechnic Institute (WPI), graduating May 2026. Graduated with High Distinction, GPA 3.83/4.0, and is a member of the Upsilon Pi Epsilon (UPE) computer science honor society.",
+  "Education (current): Master of Science in Artificial Intelligence with a concentration in Machine Learning at Northeastern University (NU), Seattle campus, expected May 2028.",
+  "Education: Bachelor of Science in Computer Science with a minor in Robotics Engineering from Worcester Polytechnic Institute (WPI), graduated May 2026. Graduated with High Distinction, GPA 3.83/4.0, and is a member of the Upsilon Pi Epsilon (UPE) computer science honor society.",
   "Award: Recipient of WPI's 2026 Data Science Outstanding MQP Award for the project 'AI for Impact: Inferring Suicidal Ideation via Smartphones'.",
-  "Further education: Santiago has been accepted to a Master's in Artificial Intelligence at WPI, continuing his focus on AI after his bachelor's degree.",
+  "Further education: After his bachelor's at WPI, Santiago continued his focus on AI by starting a Master's in Artificial Intelligence (Machine Learning concentration) at Northeastern University.",
 
   // --- Background, personality & working style ---
   "Background: Santiago is an international student originally from Bogotá, Colombia. He moved to the United States at age 18 to attend college at WPI. Spanish is his native language and he is bilingual in English.",

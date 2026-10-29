@@ -9,7 +9,7 @@ export const profile = {
   role: "Secure Full-Stack & Web Developer",
   tagline:
     "I build full-stack web apps with React, Node, and MongoDB, usually with some AI in the mix and always with security in mind.",
-  location: "Worcester, MA, USA",
+  location: "Seattle, WA, USA",
   email: "sgiraldog@gmail.com",
   phone: "+1 (774) 253-0905",
   socials: {
@@ -25,7 +25,7 @@ export const profile = {
 export const about = {
   // Written in first person. This also gives the AI assistant context.
   paragraphs: [
-    "I'm a Computer Science graduate from Worcester Polytechnic Institute, where I earned High Distinction with a 3.83 GPA and a minor in Robotics Engineering. I focus on secure full-stack web development, working across the MERN stack (MongoDB, Express, React, and Node) with TypeScript throughout.",
+    "I'm pursuing a Master of Science in Artificial Intelligence at Northeastern University's Seattle campus, concentrating in Machine Learning (expected May 2028). Before that, I earned my B.S. in Computer Science from Worcester Polytechnic Institute with High Distinction, a 3.83 GPA, and a minor in Robotics Engineering. I focus on secure full-stack web development, working across the MERN stack (MongoDB, Express, React, and Node) with TypeScript throughout.",
     "I also really enjoy building with AI. At Oracle I improved an AI agent's responses through prompt engineering and Retrieval-Augmented Generation, and along the way I've trained deep-learning models and built fast data pipelines. Whatever I'm working on, I keep it secure and privacy-conscious, from authentication and access control to protecting sensitive user data.",
     "I'm available for freelance work, whether that's a secure full-stack web app, a quick MERN MVP, API development, or adding AI features to a product you already have.",
   ],
